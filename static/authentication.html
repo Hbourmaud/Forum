@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum</title>
+</head>
+<script>
+    function myFunction() {
+  // Get the checkbox
+  var checkBox = document.getElementById("ongoing");
+  // Get the output text
+  var text = document.getElementById("username");
+
+  // If the checkbox is checked, display the output text
+  if (checkBox.checked == true){
+    text.style.display = "block";
+  } else {
+    text.style.display = "none";
+  }
+}
+</script>
+<body>
+    <div>
+        <form action="/authentication" method="POST">
+            <input type="text" id="email" name="email" placeholder="Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Entering a valid email" required="required">
+            <input type="text" id="passwd" name="passwd" placeholder="Password" pattern="^.{5,}$" title="Enter a password with 5 character minimum" required="required">
+            <h1>Create account ?</h1>
+            <input type="checkbox" onclick="myFunction()" value="ongoing" name="ongoing" id="ongoing" checked>
+            <input type="text" id="username" name="username" placeholder="Username" required="required">
+            <button type="submit" value="Register/Login">Register/Login</button>
+        </form>
+    </div>
+</body>
+</html>
