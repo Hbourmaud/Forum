@@ -7,7 +7,7 @@
     <title>Forum</title>
 </head>
 <script>
-    function myFunction() {
+    function FormLogin() {
   // Get the checkbox
   var checkBox = document.getElementById("ongoing");
   // Get the output text
@@ -27,8 +27,8 @@
             <input type="text" id="email" name="email" placeholder="Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Entering a valid email" required="required">
             <input type="text" id="passwd" name="passwd" placeholder="Password" pattern="^.{5,}$" title="Enter a password with 5 character minimum" required="required">
             <h1>Create account ?</h1>
-            <input type="checkbox" onclick="myFunction()" value="ongoing" name="ongoing" id="ongoing" checked>
-            <input type="text" id="username" name="username" placeholder="Username" required="required">
+            <input type="checkbox" onclick="FormLogin()" value="ongoing" name="ongoing" id="ongoing" checked>
+            <input type="text" id="username" name="username" placeholder="Username">
             <button type="submit" value="Register/Login">Register/Login</button>
         </form>
     </div>

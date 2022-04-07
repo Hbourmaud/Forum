@@ -12,12 +12,13 @@ import (
 )
 
 type DataAuthentication struct {
+	UUID_hash string
+	Username  string
 }
 
 func AuthenticationHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("static/authentication.html"))
 	login := false
-	data := &DataAuthentication{}
 	switch r.Method {
 	case "GET":
 
@@ -34,8 +35,6 @@ func AuthenticationHandler(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(err)
 		}
 		defer db.Close()
-
-		//test := bcrypt.CompareHashAndPassword(bytes, []byte("password"))
 		if !login {
 			rows, err := db.Query("SELECT count(*) FROM authentication WHERE email=(?);", email)
 			if err != nil {
@@ -56,17 +55,23 @@ func AuthenticationHandler(w http.ResponseWriter, r *http.Request) {
 			if email_taken {
 				fmt.Println("This email is already taken. Choose another one!")
 			} else {
-				u1 := (uuid.NewV1()).String()
+				uuid_crypted, err := bcrypt.GenerateFromPassword([]byte((uuid.NewV1()).String()), 14)
+				if err != nil {
+					fmt.Println(err)
+				}
 				crypt_passwd, err := bcrypt.GenerateFromPassword([]byte(passwd), 14)
 				if err != nil {
 					fmt.Println(err)
 				}
-				_, err = db.Exec("INSERT INTO authentication(UUID, username, email, password) VALUES(?,?,?,?);", u1, username, email, crypt_passwd)
+				_, err = db.Exec("INSERT INTO authentication(UUID, username, email, password) VALUES(?,?,?,?);", uuid_crypted, username, email, crypt_passwd)
 				if err != nil {
 					fmt.Println(err)
 				}
+				Setter_Cookie(w, r, username, string(uuid_crypted))
 			}
 		} else {
+			var passw_check []byte
+			var uid_hash string
 			rows, err := db.Query("SELECT * FROM authentication WHERE email=(?);", email)
 			if err != nil {
 				fmt.Println(err)
@@ -74,13 +79,50 @@ func AuthenticationHandler(w http.ResponseWriter, r *http.Request) {
 			defer rows.Close()
 			for rows.Next() {
 				var email_check string
-				var passw_check string
-				err = rows.Scan(&email_check, &passw_check)
+				err = rows.Scan(&uid_hash, &username, &email_check, &passw_check)
 				if err != nil {
 					fmt.Println(err)
 				}
 			}
+			correct_passwd := bcrypt.CompareHashAndPassword(passw_check, []byte(passwd))
+			if correct_passwd == nil {
+				Setter_Cookie(w, r, username, uid_hash)
+			} else {
+				fmt.Println("Wrong Password")
+			}
 		}
 	}
+	data := ""
 	tmpl.Execute(w, data)
+}
+
+func LogoutHandler(w http.ResponseWriter, r *http.Request) {
+	delete_cookie_usr := &http.Cookie{
+		Name:   "username",
+		Value:  "",
+		MaxAge: -1,
+	}
+	delete_cookie_uuid := &http.Cookie{
+		Name:   "uuid_hash",
+		Value:  "",
+		MaxAge: -1,
+	}
+	http.SetCookie(w, delete_cookie_usr)
+	http.SetCookie(w, delete_cookie_uuid)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
+func Setter_Cookie(w http.ResponseWriter, r *http.Request, username string, uid_hash string) {
+	ck_user := http.Cookie{
+		Name: "username",
+	}
+	ck_uuid := http.Cookie{
+		Name: "uuid_hash",
+	}
+	ck_user.Value = username
+	ck_uuid.Value = uid_hash
+	http.SetCookie(w, &ck_user)
+	http.SetCookie(w, &ck_uuid)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+
 }

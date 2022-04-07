@@ -17,6 +17,9 @@ func main() {
 	http.HandleFunc("/authentication", func(w http.ResponseWriter, r *http.Request) {
 		forum.AuthenticationHandler(w, r)
 	})
+	http.HandleFunc("/logout", func(w http.ResponseWriter, r *http.Request) {
+		forum.LogoutHandler(w, r)
+	})
 	fs := http.FileServer(http.Dir("static/"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
