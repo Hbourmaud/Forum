@@ -18,7 +18,6 @@ type DataAuthentication struct {
 
 func AuthenticationHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("static/authentication.html"))
-	login := false
 	switch r.Method {
 	case "GET":
 
@@ -27,70 +26,81 @@ func AuthenticationHandler(w http.ResponseWriter, r *http.Request) {
 		email := r.FormValue("email")
 		passwd := r.FormValue("passwd")
 		email_taken := false
-		if username == "" {
-			login = true
-		}
 		db, err := sql.Open("sqlite3", "./forum.db")
 		if err != nil {
 			fmt.Println(err)
 		}
 		defer db.Close()
-		if !login {
-			rows, err := db.Query("SELECT count(*) FROM authentication WHERE email=(?);", email)
+
+		rows, err := db.Query("SELECT count(*) FROM authentication WHERE email=(?);", email)
+		if err != nil {
+			fmt.Println(err)
+		}
+		defer rows.Close()
+		for rows.Next() {
+			var email_nb int
+			err = rows.Scan(&email_nb)
+			if email_nb > 0 {
+				email_taken = true
+			}
 			if err != nil {
 				fmt.Println(err)
-			}
-			defer rows.Close()
-			for rows.Next() {
-				var email_nb int
-				err = rows.Scan(&email_nb)
-				if email_nb > 0 {
-					email_taken = true
-				}
-				if err != nil {
-					fmt.Println(err)
-				}
-			}
-			fmt.Println("email", email_taken)
-			if email_taken {
-				fmt.Println("This email is already taken. Choose another one!")
-			} else {
-				uuid_crypted, err := bcrypt.GenerateFromPassword([]byte((uuid.NewV1()).String()), 14)
-				if err != nil {
-					fmt.Println(err)
-				}
-				crypt_passwd, err := bcrypt.GenerateFromPassword([]byte(passwd), 14)
-				if err != nil {
-					fmt.Println(err)
-				}
-				_, err = db.Exec("INSERT INTO authentication(UUID, username, email, password) VALUES(?,?,?,?);", uuid_crypted, username, email, crypt_passwd)
-				if err != nil {
-					fmt.Println(err)
-				}
-				Setter_Cookie(w, r, username, string(uuid_crypted))
-			}
-		} else {
-			var passw_check []byte
-			var uid_hash string
-			rows, err := db.Query("SELECT * FROM authentication WHERE email=(?);", email)
-			if err != nil {
-				fmt.Println(err)
-			}
-			defer rows.Close()
-			for rows.Next() {
-				var email_check string
-				err = rows.Scan(&uid_hash, &username, &email_check, &passw_check)
-				if err != nil {
-					fmt.Println(err)
-				}
-			}
-			correct_passwd := bcrypt.CompareHashAndPassword(passw_check, []byte(passwd))
-			if correct_passwd == nil {
-				Setter_Cookie(w, r, username, uid_hash)
-			} else {
-				fmt.Println("Wrong Password")
 			}
 		}
+		fmt.Println("email", email_taken)
+		if email_taken {
+			fmt.Println("This email is already taken. Choose another one!")
+		} else {
+			uuid_crypted, err := bcrypt.GenerateFromPassword([]byte((uuid.NewV1()).String()), 14)
+			if err != nil {
+				fmt.Println(err)
+			}
+			crypt_passwd, err := bcrypt.GenerateFromPassword([]byte(passwd), 14)
+			if err != nil {
+				fmt.Println(err)
+			}
+
+			_, err = db.Exec("INSERT INTO authentication(UUID, username, email, password) VALUES(?,?,?,?);", uuid_crypted, username, email, crypt_passwd)
+			if err != nil {
+				fmt.Println(err)
+			}
+			Setter_Cookie(w, r, username, string(uuid_crypted))
+		}
+	}
+	data := ""
+	tmpl.Execute(w, data)
+}
+
+func LoginHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("static/login.html"))
+	username := r.FormValue("username")
+	email := r.FormValue("email")
+	passwd := r.FormValue("passwd")
+	db, err := sql.Open("sqlite3", "./forum.db")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer db.Close()
+
+	var passw_check []byte
+	var uid_hash string
+	rows, err := db.Query("SELECT * FROM authentication WHERE email=(?);", email)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var email_check string
+		err = rows.Scan(&uid_hash, &username, &email_check, &passw_check)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+	correct_passwd := bcrypt.CompareHashAndPassword(passw_check, []byte(passwd))
+	if correct_passwd == nil {
+		Setter_Cookie(w, r, username, uid_hash)
+	} else {
+		fmt.Println("Wrong Password")
 	}
 	data := ""
 	tmpl.Execute(w, data)

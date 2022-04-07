@@ -17,6 +17,9 @@ func main() {
 	http.HandleFunc("/authentication", func(w http.ResponseWriter, r *http.Request) {
 		forum.AuthenticationHandler(w, r)
 	})
+	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
+		forum.LoginHandler(w, r)
+	})
 	http.HandleFunc("/logout", func(w http.ResponseWriter, r *http.Request) {
 		forum.LogoutHandler(w, r)
 	})

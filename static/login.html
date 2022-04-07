@@ -8,11 +8,10 @@
 </head>
 <body>
     <div>
-        <form action="/authentication" method="POST">
+        <form action="/login" method="POST">
             <input type="text" id="email" name="email" placeholder="Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Entering a valid email" required="required">
-            <input type="password" id="passwd" name="passwd" placeholder="Password" pattern="^.{5,}$" title="Enter a password with 5 character minimum" required="required">
-            <input type="text" id="username" name="username" placeholder="Username" required="required">
-            <button type="submit" value="Register">Register</button>
+            <input type="password" id="passwd" name="passwd" placeholder="Password" pattern="^.{5,}$" title="Invalid Password" required="required">
+            <button type="submit" value="Login">Login</button>
         </form>
     </div>
 </body>
