@@ -14,5 +14,13 @@
         {{.UUID_hash}}
         <a href="logout">Logout</a>
     </div>
+    {{range .DataTab}}
+    {{.Id_account}}
+    {{ .Title}}
+    {{ .Category}}
+    {{ .Picture_text}}
+    <button class="sub button" type="submit" value="create_comment">create comment</button>
+    {{ end }}
+    <button class="sub button" type="submit" value="create_post">create post</button>
 </body>
 </html>
