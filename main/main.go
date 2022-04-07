@@ -23,6 +23,12 @@ func main() {
 	http.HandleFunc("/logout", func(w http.ResponseWriter, r *http.Request) {
 		forum.LogoutHandler(w, r)
 	})
+	http.HandleFunc("/postcreation", func(w http.ResponseWriter, r *http.Request) {
+		forum.CreationPost(w, r)
+	})
+	http.HandleFunc("/commentcreation", func(w http.ResponseWriter, r *http.Request) {
+		forum.PublicationComment(w, r)
+	})
 	fs := http.FileServer(http.Dir("static/"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 

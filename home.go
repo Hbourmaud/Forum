@@ -15,7 +15,7 @@ type Data struct {
 
 type Info struct {
 	Id_post      int
-	Id_account   int
+	Id_account   string
 	Picture_text string
 	Title        string
 	Category     string
@@ -25,7 +25,7 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("static/index.html"))
 
 	var Id_postTab []int
-	var Id_accountTab []int
+	var Id_accountTab []string
 	var Picture_textTab []string
 	var TitleTab []string
 	var CategoryTab []string
@@ -48,7 +48,7 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 	UUID_string := ""
 	for dataPost.Next() {
 		var id_post int
-		var id_account int
+		var id_account string
 		var picture_text string
 		var Title string
 		var category string
@@ -92,5 +92,8 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 		Username:  username,
 		UUID_hash: UUID_string,
 	}
-	tmpl.Execute(w, data)
+	err2 := tmpl.Execute(w, data)
+	if err2 != nil {
+		fmt.Println(err2)
+	}
 }
