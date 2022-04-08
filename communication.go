@@ -8,10 +8,6 @@ import (
 )
 
 func CreationPost(w http.ResponseWriter, r *http.Request) {
-	// if r.URL.Path != "/postcreation" {
-	// 	http.Error(w, "404 not found.", http.StatusNotFound)
-	// 	return
-	// }
 
 	tmpl := template.Must(template.ParseFiles("static/postcreation.html"))
 
@@ -24,38 +20,44 @@ func CreationPost(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(err)
 		}
 		uuid_user := ck_uuid_user.Value
+		r.ParseForm()
 
 		// Je récupère les valeurs de l'utilisateur
-		title := r.FormValue("name")
+		title := r.FormValue("title")
 		content := r.FormValue("content")
 
-		// Cela permet d'ouvrir et fermer la database
-		db, err := sql.Open("sqlite3", "./forum.db")
-		if err != nil {
-			fmt.Println(err)
-		}
-		defer db.Close()
+		if title == "" {
 
-		// Je récupère l'UUID de la personne pour prouver que ce poste est bien à lui
-		rows, err := db.Query("SELECT UUID FROM authentication WHERE UUID=(?);", uuid_user)
-		if err != nil {
-			fmt.Println(err)
-		}
-
-		for rows.Next() {
-			var id_account int
-
-			err = rows.Scan(&id_account)
-
+		} else {
+			// Cela permet d'ouvrir et fermer la database
+			db, err := sql.Open("sqlite3", "./forum.db")
 			if err != nil {
 				fmt.Println(err)
 			}
-		}
+			defer db.Close()
 
-		// J'envoie les informations dans la base de donnée
-		_, err = db.Exec("INSERT INTO posts(title, picture_text) VALUES(?,?,?)", title, content)
-		if err != nil {
-			fmt.Println(err)
+			// Je récupère l'UUID de la personne pour prouver que ce poste est bien à lui
+			rows, err := db.Query("SELECT UUID FROM authentication WHERE UUID=(?);", uuid_user)
+			if err != nil {
+				fmt.Println(err)
+			}
+
+			for rows.Next() {
+				var id_account int
+
+				err = rows.Scan(&id_account)
+
+				if err != nil {
+					fmt.Println(err)
+				}
+			}
+			var id sql.NullInt64
+			category := "sport"
+			// J'envoie les informations dans la base de donnée
+			_, err = db.Exec("INSERT INTO posts(id, id_account, title, picture_text, category) VALUES(?,?,?,?,?)", id, uuid_user, title, content, category)
+			if err != nil {
+				fmt.Println(err)
+			}
 		}
 	}
 	data := ""
@@ -80,7 +82,7 @@ func PublicationComment(w http.ResponseWriter, r *http.Request) {
 		defer db.Close()
 
 		// Je récupère l'UUID de la personne pour prouver que ce commentaire est bien à lui
-		//data, err := db.Query("SELECT UUID FROM authentication WHERE ")
+		//rows, err := db.Query("SELECT UUID FROM authentication WHERE UUID=(?);", uuid_user)
 
 		// Je récupère l'ID du poste pour montrer que le commentaire est bien relier au poste
 		//post, err := db.Query("SELECT INTO posts(id) WHERE id =(?)" /*variable id post*/)
