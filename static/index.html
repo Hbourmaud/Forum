@@ -11,21 +11,29 @@
         <a href="authentication">Register</a>
         <a href="login">Login</a>
         <h1>{{.Username}}</h1>
-        <h1>{{.UUID_hash}}</h1>
+        <!-- <h1>{{.UUID_hash}}</h1> -->
         <a href="logout">Logout</a>
         <form action="/postcreation" method="POST">
             <button class="sub button" type="submit" value="create_post">create post</button>
         </form>
     </div>
     {{range .DataTab}}
+    POST
     {{.Id_account}}
     {{ .Title}}
     {{ .Category}}
     {{ .Picture_text}}
+    {{ .Id_post}}
     <form action="/commentcreation" method="POST">
-        <input type="hidden" id="uuid_perso" name="uuid_perso" value="{{.Id_post}}">
+        <input type="hidden" id="uuid_post" name="uuid_post" value="{{.Id_post}}">
         <button class="sub button" type="submit" value="create_comment">create comment</button>
     </form>
+    {{range .Comments}}
+    COMM
+    {{ .Id_account}}
+    {{ .Comment}}
+    {{ .Id_post}}
+    {{ end }}
     {{ end }}
 </body>
 </html>

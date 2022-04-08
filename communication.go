@@ -7,6 +7,10 @@ import (
 	"net/http"
 )
 
+type PostIdStruct struct {
+	Id_post string
+}
+
 func CreationPost(w http.ResponseWriter, r *http.Request) {
 
 	tmpl := template.Must(template.ParseFiles("static/postcreation.html"))
@@ -58,6 +62,7 @@ func CreationPost(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				fmt.Println(err)
 			}
+			http.Redirect(w, r, "/", http.StatusSeeOther)
 		}
 	}
 	data := ""
@@ -65,34 +70,80 @@ func CreationPost(w http.ResponseWriter, r *http.Request) {
 }
 
 func PublicationComment(w http.ResponseWriter, r *http.Request) {
-
+	var uuid_post string
 	tmpl := template.Must(template.ParseFiles("static/commentcreation.html"))
 
 	switch r.Method {
 	case "GET":
 	case "POST":
+
+		ck_uuid_user, err := r.Cookie("uuid_hash")
+		if err != nil {
+			fmt.Println(err)
+		}
+		uuid_user := ck_uuid_user.Value
+		r.ParseForm()
+
 		// Je récupère la valeur de l'utilisateur
 		content := r.FormValue("content")
+		uuid_post = r.FormValue("uuid_post")
 
-		// Cela permet d'ouvrir et fermer la database
-		db, err := sql.Open("sqlite3", "./forum.db")
-		if err != nil {
-			fmt.Println(err)
-		}
-		defer db.Close()
+		if content == "" {
 
-		// Je récupère l'UUID de la personne pour prouver que ce commentaire est bien à lui
-		//rows, err := db.Query("SELECT UUID FROM authentication WHERE UUID=(?);", uuid_user)
+		} else {
+			// Cela permet d'ouvrir et fermer la database
+			db, err := sql.Open("sqlite3", "./forum.db")
+			if err != nil {
+				fmt.Println(err)
+			}
+			defer db.Close()
 
-		// Je récupère l'ID du poste pour montrer que le commentaire est bien relier au poste
-		//post, err := db.Query("SELECT INTO posts(id) WHERE id =(?)" /*variable id post*/)
+			// Je récupère l'UUID de la personne pour prouver que ce commentaire est bien à lui
+			rows1, err := db.Query("SELECT UUID FROM authentication WHERE UUID=(?);", uuid_user)
+			if err != nil {
+				fmt.Println(err)
+			}
 
-		// J'envoie les informations dans la base de donnée
-		_, err = db.Exec("INSERT INTO comments(comment) VALUES(?)", content)
-		if err != nil {
-			fmt.Println(err)
+			// Je récupère l'ID du poste pour montrer que le commentaire est bien relier au poste
+			rows2, err := db.Query("SELECT id FROM posts WHERE id =(?)", uuid_post)
+			if err != nil {
+				fmt.Println(err)
+			}
+
+			for rows1.Next() {
+				var id_account int
+
+				err = rows1.Scan(&id_account)
+
+				if err != nil {
+					fmt.Println(err)
+				}
+			}
+
+			for rows2.Next() {
+				var id_post int
+
+				err = rows2.Scan(&id_post)
+
+				if err != nil {
+					fmt.Println(err)
+				}
+			}
+			var id sql.NullInt64
+			// J'envoie les informations dans la base de donnée
+			_, err = db.Exec("INSERT INTO comments(id, id_post, id_account, comment) VALUES(?,?,?,?)", id, uuid_post, uuid_user, content)
+			// _, err = db.Exec("INSERT INTO posts(id, id_account, title, picture_text, category) VALUES(?,?,?,?,?)", id, uuid_user, title, content, category)
+			if err != nil {
+				fmt.Println(err)
+			}
+			http.Redirect(w, r, "/", http.StatusSeeOther)
 		}
 	}
-	data := ""
-	tmpl.Execute(w, data)
+	data := &PostIdStruct{
+		Id_post: uuid_post,
+	}
+	err := tmpl.Execute(w, data)
+	if err != nil {
+		fmt.Println(err)
+	}
 }

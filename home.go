@@ -19,16 +19,29 @@ type Info struct {
 	Picture_text string
 	Title        string
 	Category     string
+	Comments     []CommentStruct
+}
+
+type CommentStruct struct {
+	Id_post    int
+	Id_comment int
+	Id_account string
+	Comment    string
 }
 
 func MainHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("static/index.html"))
 
-	var Id_postTab []int
-	var Id_accountTab []string
+	// variable post
+	var Id_postTab []int       /* réutiliser pour le commentaire */
+	var Id_accountTab []string /* réutiliser pour le commentaire */
 	var Picture_textTab []string
 	var TitleTab []string
 	var CategoryTab []string
+
+	// variable commentaire
+	var Id_commentTab []int
+	var CommentTab []string
 
 	//Cela permet d'ouvrir et de fermer la database
 	db, err := sql.Open("sqlite3", "./forum.db")
@@ -44,6 +57,7 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer dataPost.Close()
 	var DataTab []Info
+	var DComment []CommentStruct
 	username := "not login"
 	UUID_string := ""
 	for dataPost.Next() {
@@ -64,7 +78,9 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 		Picture_textTab = append(Picture_textTab, picture_text)
 		TitleTab = append(TitleTab, Title)
 		CategoryTab = append(CategoryTab, category)
+
 	}
+
 	var post Info
 	for i := 0; i < len(Id_postTab); i++ {
 		post.Id_post = Id_postTab[i]
@@ -74,6 +90,38 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 		post.Picture_text = Picture_textTab[i]
 
 		DataTab = append(DataTab, post)
+
+		dataComment, err := db.Query("SELECT id, id_account, comment FROM comments WHERE id_post=(?)", post.Id_post)
+		if err != nil {
+			fmt.Println(err)
+		}
+		defer dataComment.Close()
+
+		for dataComment.Next() {
+			var Id_comment int
+			var Id_account string
+			var Comment string
+
+			err = dataComment.Scan(&Id_comment, &Id_account, &Comment)
+
+			if err != nil {
+				fmt.Println(err)
+			}
+
+			Id_commentTab = append(Id_commentTab, Id_comment)
+			Id_accountTab = append(Id_accountTab, Id_account)
+			CommentTab = append(CommentTab, Comment)
+		}
+
+		var comment CommentStruct
+		for i := 0; i < len(Id_commentTab); i++ {
+			comment.Id_comment = Id_commentTab[i]
+			comment.Id_account = Id_accountTab[i]
+			comment.Comment = CommentTab[i]
+
+			DComment = append(DComment, comment)
+		}
+		post.Comments = DComment
 	}
 	ck_user, err := r.Cookie("username")
 	if err != nil {
