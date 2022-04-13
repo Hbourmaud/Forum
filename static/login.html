@@ -4,16 +4,35 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"type="text/css" href="static/style.css"/>
     <title>Forum</title>
 </head>
 <body>
     <div>
+    <div class="apple">
+        <div class="sign">
+        <h1>Sign In</h1> </div>
+    
         <form action="/login" method="POST">
-            <input type="text" id="email" name="email" placeholder="Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Entering a valid email" required="required">
+            <div class="emails">
+            <input type="text" id="email" name="email" placeholder="Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Entering a valid email" required="required"> 
+            </div>
+            <br>
+            <div class="passwords">
             <input type="password" id="passwd" name="passwd" placeholder="Password" pattern="^.{5,}$" title="Invalid Password" required="required">
+          </div>
+            <br>
+            <div class="submits">
             <button type="submit" value="Login">Login</button>
-        </form>
-        <a href="authentication"> Create an account ? </a>
+           </div>
+            </form>
+            <div class="account">
+            <a href="authentication"> Create an account ? </a> 
+            </div>
+        
+
+           </div>
+    </div>
     </div>
 </body>
 </html>

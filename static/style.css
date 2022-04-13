@@ -1,0 +1,102 @@
+body{
+    background-color: white;
+}
+.box
+{
+    width: 100%;
+    display: inline-block;
+    border: 5px solid rgb(163, 160, 160);
+}
+.littlebox{
+    margin-left: 80%;
+    border: 2px solid grey;
+}
+
+h1 {
+    display: inline;
+    clear: none;
+}
+
+.apple{
+    background-color:#f9faff;
+    margin-top:15%;
+    border-style: solid;
+    border-radius: 25px;
+    border-width: 4px;
+    border-color:rgb(112, 127, 159);
+    width:400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.sign{
+    color:#8d85ac;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+    padding: 30px;
+}
+
+.emails{
+    text-align: center;
+    padding: 5px;
+}
+
+.passwords{
+    text-align: center;
+    padding: 5px;
+}
+
+.submits{
+    text-align: center;
+    padding: 5px;
+}
+
+.account{
+    text-align: center;
+    padding: 5px;
+}
+
+.orange{
+    background-color:#f9faff;
+    margin-top:15%;
+    border-style: solid;
+    border-radius: 25px;
+    border-width: 4px;
+    border-color:rgb(112, 127, 159);
+    width:400px;
+    padding:20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.register{
+    text-align: center;
+    color:#8d85ac;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+.users{
+    text-align: center;
+    padding: 5px;
+    
+}
+
+.mails{
+    text-align: center;
+    padding: 5px;
+}
+
+.passwordss{
+    text-align: center;
+    padding: 5px;
+}
+
+.subs{
+    text-align: center;
+    padding: 5px;
+}
+
+.logs{
+    text-align: center;
+    padding: 5px;
+}
+
