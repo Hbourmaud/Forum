@@ -4,17 +4,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"type="text/css" href="static/style.css"/>
     <title>Forum</title>
 </head>
 <body>
     <div>
         <form action="/authentication" method="POST">
-            <input type="text" id="username" name="username" placeholder="Username" required="required">
-            <input type="text" id="email" name="email" placeholder="Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Entering a valid email" required="required">
-            <input type="password" id="passwd" name="passwd" placeholder="Password" pattern="^.{5,}$" title="Enter a password with 5 character minimum" required="required">
-            <button type="submit" value="Register">Register</button>
+            <div class="orange">
+                <div class="register">
+                <h1>Register Here</h1>
+            </div>
+            <br>
+            <div class="users">
+            <input type="text" id="username" name="username" placeholder="Username" required="required"> </div>
+            <div class="mails">
+            <input type="text" id="email" name="email" placeholder="Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Entering a valid email" required="required"> </div>
+            <div class="passwordss">
+            <input type="password" id="passwd" name="passwd" placeholder="Password" pattern="^.{5,}$" title="Enter a password with 5 character minimum" required="required"> 
+        </div>
+            <div class="subs">
+            <button type="submit" value="Register">Register</button> </div>
         </form>
-        <a href="login"> Already an account ?</a>
+        <div class="logs">
+        <a href="login"> Already have an account ?</a> </div>
+    </div>
     </div>
 </body>
 </html>
