@@ -29,6 +29,9 @@ func main() {
 	http.HandleFunc("/commentcreation", func(w http.ResponseWriter, r *http.Request) {
 		forum.PublicationComment(w, r)
 	})
+	http.HandleFunc("/comment", func(w http.ResponseWriter, r *http.Request) {
+		forum.MoreComment(w, r)
+	})
 	fs := http.FileServer(http.Dir("static/"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
