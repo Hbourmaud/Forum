@@ -6,6 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>More comments</title>
 </head>
+<script>
+    function actionLikeDislike(like_or_dislike_req,id_post_req,id_comment_req){
+        fetch("http://localhost:8080/like_dislike", {
+            method: 'POST',
+            body: JSON.stringify({
+                like_or_dislike: like_or_dislike_req,
+                id_post: id_post_req,
+                id_comment: id_comment_req,
+            }),
+        })
+    }
+</script>
 <body>
     <div>
 		{{ .Id_post}}
@@ -22,6 +34,12 @@
 			{{ .Id_comment }}
 			{{ .Id_account }}
 			{{ .Comment }}
+            <script>
+                var like = "like"
+                var dislike = "dislike"
+            </script>
+            <button id="{{.Id_comment}}" onclick="actionLikeDislike(like,null,this.id)">Like</button>
+            <button id="{{.Id_comment}}" onclick="actionLikeDislike(dislike,null,this.id)">Dislike</button>
 		{{ end }}
 </body>
 </html>

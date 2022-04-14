@@ -23,6 +23,9 @@ func main() {
 	http.HandleFunc("/logout", func(w http.ResponseWriter, r *http.Request) {
 		forum.LogoutHandler(w, r)
 	})
+	http.HandleFunc("/like_dislike", func(w http.ResponseWriter, r *http.Request) {
+		forum.LikeHandler(w, r)
+	})
 	http.HandleFunc("/postcreation", func(w http.ResponseWriter, r *http.Request) {
 		forum.CreationPost(w, r)
 	})

@@ -32,18 +32,18 @@ func AuthenticationHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		defer db.Close()
 
-		rows, err := db.Query("SELECT count(*) FROM authentication WHERE email=(?);", email)
-		if err != nil {
+		rows, err2 := db.Query("SELECT count(*) FROM authentication WHERE email=(?);", email)
+		if err2 != nil {
 			fmt.Println(err)
 		}
 		defer rows.Close()
 		for rows.Next() {
 			var email_nb int
-			err = rows.Scan(&email_nb)
+			err3 := rows.Scan(&email_nb)
 			if email_nb > 0 {
 				email_taken = true
 			}
-			if err != nil {
+			if err3 != nil {
 				fmt.Println(err)
 			}
 		}
@@ -51,17 +51,17 @@ func AuthenticationHandler(w http.ResponseWriter, r *http.Request) {
 		if email_taken {
 			fmt.Println("This email is already taken. Choose another one!")
 		} else {
-			uuid_crypted, err := bcrypt.GenerateFromPassword([]byte((uuid.NewV1()).String()), 14)
-			if err != nil {
+			uuid_crypted, err4 := bcrypt.GenerateFromPassword([]byte((uuid.NewV1()).String()), 14)
+			if err4 != nil {
 				fmt.Println(err)
 			}
-			crypt_passwd, err := bcrypt.GenerateFromPassword([]byte(passwd), 14)
-			if err != nil {
+			crypt_passwd, err5 := bcrypt.GenerateFromPassword([]byte(passwd), 14)
+			if err5 != nil {
 				fmt.Println(err)
 			}
 
-			_, err = db.Exec("INSERT INTO authentication(UUID, username, email, password) VALUES(?,?,?,?);", uuid_crypted, username, email, crypt_passwd)
-			if err != nil {
+			_, err6 := db.Exec("INSERT INTO authentication(UUID, username, email, password) VALUES(?,?,?,?);", uuid_crypted, username, email, crypt_passwd)
+			if err6 != nil {
 				fmt.Println(err)
 			}
 			Setter_Cookie(w, r, username, string(uuid_crypted))
@@ -84,15 +84,15 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	var passw_check []byte
 	var uid_hash string
-	rows, err := db.Query("SELECT * FROM authentication WHERE email=(?);", email)
-	if err != nil {
+	rows, err2 := db.Query("SELECT * FROM authentication WHERE email=(?);", email)
+	if err2 != nil {
 		fmt.Println(err)
 	}
 	defer rows.Close()
 	for rows.Next() {
 		var email_check string
-		err = rows.Scan(&uid_hash, &username, &email_check, &passw_check)
-		if err != nil {
+		err3 := rows.Scan(&uid_hash, &username, &email_check, &passw_check)
+		if err3 != nil {
 			fmt.Println(err)
 		}
 	}
