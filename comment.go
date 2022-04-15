@@ -18,12 +18,11 @@ func MoreComment(w http.ResponseWriter, r *http.Request) {
 		uuid_post := r.FormValue("uuid_post")
 
 		// variable post
-		var Id_post int
-		var Id_account string
-		var Picture_text string
-		var Title string
-		var Category string
-
+		var id_post int
+		var id_account string
+		var picture_text string
+		var title string
+		var category string
 		//variable commentaire
 		var Id_commentTab []int
 		var Id_accountTab []string
@@ -45,33 +44,23 @@ func MoreComment(w http.ResponseWriter, r *http.Request) {
 
 		var DComment []CommentStruct
 		for dataPost.Next() {
-			var id_post int
-			var id_account string
-			var picture_text string
-			var title string
-			var category string
 
-			err = dataPost.Scan(&id_post, &id_account, &picture_text, &Title, &category)
+			err = dataPost.Scan(&id_post, &id_account, &picture_text, &title, &category)
 
 			if err != nil {
 				fmt.Println(err)
 			}
 
-			Id_post = id_post
-			Id_account = id_account
-			Picture_text = picture_text
-			Title = title
-			Category = category
 		}
+		/*
+			var post Info
 
-		var post Info
-
-		post.Id_post = Id_post
-		post.Id_account = Id_account
-		post.Title = Title
-		post.Category = Category
-		post.Picture_text = Picture_text
-
+			post.Id_post = Id_post
+			post.Id_account = Id_account
+			post.Title = Title
+			post.Category = Category
+			post.Picture_text = Picture_text
+		*/
 		dataComment, err := db.Query("SELECT id, id_account, comment FROM comments WHERE id_post=(?)", uuid_post)
 		if err != nil {
 			fmt.Println(err)
@@ -101,8 +90,7 @@ func MoreComment(w http.ResponseWriter, r *http.Request) {
 			}
 			DComment = append(DComment, comment)
 		}
-		post.Comments = DComment
-
+		//post.Comments = DComment
 		int_uuid_post, err1 := strconv.Atoi(uuid_post)
 		if err1 != nil {
 			fmt.Println(err)
@@ -110,10 +98,10 @@ func MoreComment(w http.ResponseWriter, r *http.Request) {
 
 		data := &Info{
 			Id_post:      int_uuid_post,
-			Id_account:   Id_account,
-			Picture_text: Picture_text,
-			Title:        Title,
-			Category:     Category,
+			Id_account:   id_account,
+			Picture_text: picture_text,
+			Title:        title,
+			Category:     category,
 			Comments:     DComment,
 		}
 		err2 := tmpl.Execute(w, data)
