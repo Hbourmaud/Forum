@@ -27,6 +27,8 @@ func MoreComment(w http.ResponseWriter, r *http.Request) {
 		var Id_commentTab []int
 		var Id_accountTab []string
 		var CommentTab []string
+		var Like_commentTab []int
+		var Dislike_commentTab []int
 
 		//Cela permet d'ouvrir et de fermer la database
 		db, err := sql.Open("sqlite3", "./forum.db")
@@ -45,22 +47,14 @@ func MoreComment(w http.ResponseWriter, r *http.Request) {
 		var DComment []CommentStruct
 		for dataPost.Next() {
 
-			err = dataPost.Scan(&id_post, &id_account, &picture_text, &title, &category)
+			err = dataPost.Scan(&id_post, &id_account, &title, &picture_text, &category)
 
 			if err != nil {
 				fmt.Println(err)
 			}
 
 		}
-		/*
-			var post Info
 
-			post.Id_post = Id_post
-			post.Id_account = Id_account
-			post.Title = Title
-			post.Category = Category
-			post.Picture_text = Picture_text
-		*/
 		dataComment, err := db.Query("SELECT id, id_account, comment FROM comments WHERE id_post=(?)", uuid_post)
 		if err != nil {
 			fmt.Println(err)
@@ -90,7 +84,38 @@ func MoreComment(w http.ResponseWriter, r *http.Request) {
 			}
 			DComment = append(DComment, comment)
 		}
-		//post.Comments = DComment
+
+		for i := 0; i < len(Id_commentTab); i++ {
+			dataLike, err2 := db.Query("SELECT count() FROM likes WHERE id_comment=(?)", Id_commentTab[i])
+			if err2 != nil {
+				fmt.Println(err)
+			}
+			defer dataPost.Close()
+			for dataLike.Next() {
+				var like_post int
+				err3 := dataLike.Scan(&like_post)
+				if err3 != nil {
+					fmt.Println(err3)
+				}
+				Like_commentTab = append(Like_commentTab, like_post)
+			}
+			dataDislike, err4 := db.Query("SELECT count() FROM dislikes WHERE id_comment=(?)", Id_commentTab[i])
+			if err4 != nil {
+				fmt.Println(err)
+			}
+			defer dataDislike.Close()
+			for dataDislike.Next() {
+				var dislike_post int
+				err5 := dataDislike.Scan(&dislike_post)
+				if err5 != nil {
+					fmt.Println(err5)
+				}
+				Dislike_commentTab = append(Dislike_commentTab, dislike_post)
+			}
+			DComment[i].Like_comment = Like_commentTab[i]
+			DComment[i].Dislike_comment = Dislike_commentTab[i]
+		}
+
 		int_uuid_post, err1 := strconv.Atoi(uuid_post)
 		if err1 != nil {
 			fmt.Println(err)

@@ -16,18 +16,29 @@
                 id_comment: id_comment_req,
             }),
         })
+		window.location.reload();
     }
 </script>
 <body>
-    <div>
+	<div>
         <a href="authentication">Register</a>
         <a href="login">Login</a>
         <h1>{{.Username}}</h1>
-        <!-- <h1>{{.UUID_hash}}</h1> -->
         <a href="logout">Logout</a>
         <form action="/postcreation" method="POST">
             <button class="sub button" type="submit" value="create_post">create post</button>
         </form>
+		<form action="/" method="POST">
+			<SELECT id="category" name="category" size="1">
+				<OPTION>
+				<OPTION>all
+				<OPTION>politic
+				<OPTION>sport
+				<OPTION>entertainment
+				<OPTION>others
+			</SELECT>
+			<button class="button" type="submit" value="filter">filter</button>
+		</form>
     </div>
     {{range .DataTab}}
         POST
@@ -35,13 +46,15 @@
         {{ .Title}}
         {{ .Category}}
         {{ .Picture_text}}
-        {{ .Id_post}}
     <script>
         var like = "like"
         var dislike = "dislike"
     </script>
-    <button id="{{.Id_post}}" onclick="actionLikeDislike(like,this.id,null)">Like</button>
-    <button id="{{.Id_post}}" onclick="actionLikeDislike(dislike,this.id,null)">Dislike</button>
+	<button id="{{.Id_post}}" onclick="actionLikeDislike(like,this.id,null)">Like</button><label>{{.Like}}</label>
+	<button id="{{.Id_post}}" onclick="actionLikeDislike(dislike,this.id,null)">Dislike</button><label>{{.Dislike}}</label>
+	COMM:
+	{{.One_comment_author}}
+	{{.One_comment}}
     <form action="/comment" method="POST">
         <input type="hidden" id="uuid_post" name="uuid_post" value="{{.Id_post}}">
         <button class="sub button" type="submit" value="more_comments">view more comments</button>

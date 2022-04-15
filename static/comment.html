@@ -16,6 +16,7 @@
                 id_comment: id_comment_req,
             }),
         })
+		window.location.reload();
     }
 </script>
 <body>
@@ -38,8 +39,8 @@
                 var like = "like"
                 var dislike = "dislike"
             </script>
-            <button id="{{.Id_comment}}" onclick="actionLikeDislike(like,null,this.id)">Like</button>
-            <button id="{{.Id_comment}}" onclick="actionLikeDislike(dislike,null,this.id)">Dislike</button>
+            <button id="{{.Id_comment}}" onclick="actionLikeDislike(like,null,this.id)">Like</button>{{.Like_comment}}
+            <button id="{{.Id_comment}}" onclick="actionLikeDislike(dislike,null,this.id)">Dislike</button>{{.Dislike_comment}}
 		{{ end }}
 </body>
 </html>
