@@ -97,7 +97,12 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {
 	case "POST":
-		user_uuid, _ := r.Cookie("uuid_hash")
+		user_uuid, err := r.Cookie("uuid_hash")
+		if err != nil {
+			http.Redirect(w, r, "/login", http.StatusSeeOther)
+			fmt.Println(err)
+			return
+		}
 		uuid_user := user_uuid.Value
 		category := r.FormValue("category")
 		created_posted := r.FormValue("created_posts")

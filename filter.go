@@ -40,7 +40,7 @@ func filters(category string, user_uuid string, created_posts string, liked_post
 			var category string
 			var picture string
 
-			err = rows.Scan(&id_post, &id_account, &texts, &title, &category, &picture)
+			err = rows.Scan(&id_post, &id_account, &title, &texts, &category, &picture)
 
 			if err != nil {
 				fmt.Println(err)
@@ -116,7 +116,7 @@ func filters(category string, user_uuid string, created_posts string, liked_post
 				var category string
 				var picture string
 
-				err = rows.Scan(&id_post, &id_account, &texts, &title, &category, &picture)
+				err = rows.Scan(&id_post, &id_account, &title, &texts, &category, &picture)
 
 				if err != nil {
 					fmt.Println(err)
@@ -155,7 +155,7 @@ func filters(category string, user_uuid string, created_posts string, liked_post
 			var category string
 			var picture string
 
-			err = rows.Scan(&id_post, &id_account, &texts, &title, &category, &picture)
+			err = rows.Scan(&id_post, &id_account, &title, &texts, &category, &picture)
 
 			if err != nil {
 				fmt.Println(err)
