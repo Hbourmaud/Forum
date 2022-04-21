@@ -6,7 +6,6 @@ import (
 )
 
 func addDetailsPost(DataTab []Info) []Info {
-	fmt.Println("datatab", DataTab)
 	db, err := sql.Open("sqlite3", "./forum.db")
 	if err != nil {
 		fmt.Println(err)
@@ -23,7 +22,7 @@ func addDetailsPost(DataTab []Info) []Info {
 		post.Id_account = DataTab[i].Id_account
 		post.Title = DataTab[i].Title
 		post.Category = DataTab[i].Category
-		post.Picture_text = DataTab[i].Picture_text
+		post.Texts = DataTab[i].Texts
 		One_comment_authorTab = append(One_comment_authorTab, "")
 		One_commentTab = append(One_commentTab, "")
 
@@ -76,6 +75,5 @@ func addDetailsPost(DataTab []Info) []Info {
 		post.Dislike = DislikeTab[i]
 		DataTabFinal = append(DataTabFinal, post)
 	}
-	fmt.Println("test", DataTabFinal)
 	return DataTabFinal
 }

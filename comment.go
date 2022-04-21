@@ -13,6 +13,7 @@ func MoreComment(w http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {
 	case "GET":
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 	case "POST":
 
 		uuid_post := r.FormValue("uuid_post")
@@ -20,9 +21,10 @@ func MoreComment(w http.ResponseWriter, r *http.Request) {
 		// variable post
 		var id_post int
 		var id_account string
-		var picture_text string
+		var texts string
 		var title string
 		var category string
+		var picture string
 		//variable commentaire
 		var Id_commentTab []int
 		var Id_accountTab []string
@@ -47,7 +49,7 @@ func MoreComment(w http.ResponseWriter, r *http.Request) {
 		var DComment []CommentStruct
 		for dataPost.Next() {
 
-			err = dataPost.Scan(&id_post, &id_account, &title, &picture_text, &category)
+			err = dataPost.Scan(&id_post, &id_account, &title, &texts, &category, &picture)
 
 			if err != nil {
 				fmt.Println(err)
@@ -122,12 +124,12 @@ func MoreComment(w http.ResponseWriter, r *http.Request) {
 		}
 
 		data := &Info{
-			Id_post:      int_uuid_post,
-			Id_account:   id_account,
-			Picture_text: picture_text,
-			Title:        title,
-			Category:     category,
-			Comments:     DComment,
+			Id_post:    int_uuid_post,
+			Id_account: id_account,
+			Texts:      texts,
+			Title:      title,
+			Category:   category,
+			Comments:   DComment,
 		}
 		err2 := tmpl.Execute(w, data)
 		if err2 != nil {

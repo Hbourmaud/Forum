@@ -38,7 +38,7 @@ func main() {
 	fs := http.FileServer(http.Dir("static/"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
-	err := http.ListenAndServe("localhost:8080", nil)
+	err := http.ListenAndServe("localhost:8081", nil)
 
 	if err != nil {
 		fmt.Println(err)

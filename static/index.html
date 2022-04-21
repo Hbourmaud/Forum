@@ -8,7 +8,7 @@
 </head>
 <script>
     function actionLikeDislike(like_or_dislike_req,id_post_req,id_comment_req){
-        fetch("http://localhost:8080/like_dislike", {
+        fetch("/like_dislike", {
             method: 'POST',
             body: JSON.stringify({
                 like_or_dislike: like_or_dislike_req,
@@ -38,6 +38,8 @@
 				<OPTION>others
 			</SELECT>
 			<button class="button" type="submit" value="filter">filter</button>
+			<button class="button" type="submit" name="created_posts" value="created_posts"> created posts </button>
+			<button class="button" type="submit" name="liked_posts" value="liked_posts"> linked posts </button>
 		</form>
     </div>
     {{range .DataTab}}
@@ -45,7 +47,7 @@
         {{.Id_post}}
         {{ .Title}}
         {{ .Category}}
-        {{ .Picture_text}}
+        {{ .Texts}}
     <script>
         var like = "like"
         var dislike = "dislike"

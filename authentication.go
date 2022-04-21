@@ -20,7 +20,7 @@ func AuthenticationHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("static/authentication.html"))
 	switch r.Method {
 	case "GET":
-
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 	case "POST":
 		username := r.FormValue("username")
 		email := r.FormValue("email")

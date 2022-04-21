@@ -17,11 +17,13 @@ func CreationPost(w http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {
 	case "GET":
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 	case "POST":
 		ck_uuid_user, err := r.Cookie("uuid_hash")
 		if err != nil {
-			http.Redirect(w, r, "/", http.StatusSeeOther)
+			http.Redirect(w, r, "/login", http.StatusSeeOther)
 			fmt.Println(err)
+			return
 		}
 		uuid_user := ck_uuid_user.Value
 		r.ParseForm()
@@ -58,7 +60,7 @@ func CreationPost(w http.ResponseWriter, r *http.Request) {
 			}
 			var id sql.NullInt64
 			// J'envoie les informations dans la base de donnée
-			_, err = db.Exec("INSERT INTO posts(id, id_account, title, picture_text, category) VALUES(?,?,?,?,?)", id, uuid_user, title, content, category)
+			_, err = db.Exec("INSERT INTO posts(id, id_account, title, texts, category) VALUES(?,?,?,?,?)", id, uuid_user, title, content, category)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -75,11 +77,14 @@ func PublicationComment(w http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {
 	case "GET":
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 	case "POST":
 
 		ck_uuid_user, err := r.Cookie("uuid_hash")
 		if err != nil {
+			http.Redirect(w, r, "/login", http.StatusSeeOther)
 			fmt.Println(err)
+			return
 		}
 		uuid_user := ck_uuid_user.Value
 		r.ParseForm()

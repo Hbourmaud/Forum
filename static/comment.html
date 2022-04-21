@@ -8,7 +8,7 @@
 </head>
 <script>
     function actionLikeDislike(like_or_dislike_req,id_post_req,id_comment_req){
-        fetch("http://localhost:8080/like_dislike", {
+        fetch("/like_dislike", {
             method: 'POST',
             body: JSON.stringify({
                 like_or_dislike: like_or_dislike_req,
@@ -24,7 +24,7 @@
 		{{ .Id_post}}
 		{{ .Id_account}}
 		{{ .Title}}
-		{{ .Picture_text}}
+		{{ .Texts}}
 		{{ .Category}}
             <form action="/commentcreation" method="POST">
                 <input type="hidden" id="uuid_post" name="uuid_post" value="{{.Id_post}}">

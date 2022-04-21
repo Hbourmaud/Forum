@@ -16,7 +16,7 @@ type Data struct {
 type Info struct {
 	Id_post            int
 	Id_account         string
-	Picture_text       string
+	Texts              string
 	Title              string
 	Category           string
 	Like               int
@@ -41,13 +41,9 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 	// variable post
 	var Id_postTab []int       /* réutiliser pour le commentaire */
 	var Id_accountTab []string /* réutiliser pour le commentaire */
-	var Picture_textTab []string
+	var TextsTab []string
 	var TitleTab []string
 	var CategoryTab []string
-	var LikeTab []int
-	var DislikeTab []int
-	var One_commentTab []string
-	var One_comment_authorTab []string
 
 	//Cela permet d'ouvrir et de fermer la database
 	db, err := sql.Open("sqlite3", "./forum.db")
@@ -69,11 +65,12 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 	for dataPost.Next() {
 		var id_post int
 		var id_account string
-		var picture_text string
+		var texts string
 		var Title string
 		var category string
+		var picture string
 
-		err = dataPost.Scan(&id_post, &id_account, &picture_text, &Title, &category)
+		err = dataPost.Scan(&id_post, &id_account, &Title, &texts, &category, &picture)
 
 		if err != nil {
 			fmt.Println(err)
@@ -81,7 +78,7 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 
 		Id_postTab = append(Id_postTab, id_post)
 		Id_accountTab = append(Id_accountTab, id_account)
-		Picture_textTab = append(Picture_textTab, picture_text)
+		TextsTab = append(TextsTab, texts)
 		TitleTab = append(TitleTab, Title)
 		CategoryTab = append(CategoryTab, category)
 
@@ -92,65 +89,21 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 		post.Id_account = Id_accountTab[i]
 		post.Title = TitleTab[i]
 		post.Category = CategoryTab[i]
-		post.Picture_text = Picture_textTab[i]
-		One_comment_authorTab = append(One_comment_authorTab, "")
-		One_commentTab = append(One_commentTab, "")
+		post.Texts = TextsTab[i]
 
-		dataComment, err := db.Query("SELECT id_account, comment FROM comments WHERE id_post=(?) ORDER BY id DESC LIMIT 1", post.Id_post)
-		if err != nil {
-			fmt.Println(err)
-		}
-		defer dataComment.Close()
-
-		for dataComment.Next() {
-			var Id_comment_author string
-			var Comment string
-			err = dataComment.Scan(&Id_comment_author, &Comment)
-
-			if err != nil {
-				fmt.Println(err)
-			}
-			One_comment_authorTab[i] = Id_comment_author
-			One_commentTab[i] = Comment
-		}
-
-		dataLike, err2 := db.Query("SELECT count() FROM likes WHERE id_post=(?)", post.Id_post)
-		if err2 != nil {
-			fmt.Println(err)
-		}
-		defer dataPost.Close()
-		for dataLike.Next() {
-			var like_post int
-			err3 := dataLike.Scan(&like_post)
-			if err3 != nil {
-				fmt.Println(err3)
-			}
-			LikeTab = append(LikeTab, like_post)
-		}
-		dataDislike, err4 := db.Query("SELECT count() FROM dislikes WHERE id_post=(?)", post.Id_post)
-		if err4 != nil {
-			fmt.Println(err)
-		}
-		defer dataDislike.Close()
-		for dataDislike.Next() {
-			var dislike_post int
-			err5 := dataDislike.Scan(&dislike_post)
-			if err5 != nil {
-				fmt.Println(err5)
-			}
-			DislikeTab = append(DislikeTab, dislike_post)
-		}
-		post.One_comment = One_commentTab[i]
-		post.One_comment_author = One_comment_authorTab[i]
-		post.Like = LikeTab[i]
-		post.Dislike = DislikeTab[i]
 		DataTab = append(DataTab, post)
 	}
+	DataTab = addDetailsPost(DataTab)
 
 	switch r.Method {
 	case "POST":
+		user_uuid, _ := r.Cookie("uuid_hash")
+		uuid_user := user_uuid.Value
 		category := r.FormValue("category")
-		DataTab = filters(category)
+		created_posted := r.FormValue("created_posts")
+		liked_posts := r.FormValue("liked_posts")
+		DataTab = filters(category, uuid_user, created_posted, liked_posts)
+		DataTab = addDetailsPost(DataTab)
 	}
 
 	ck_user, err := r.Cookie("username")
