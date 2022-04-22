@@ -51,10 +51,7 @@ func AuthenticationHandler(w http.ResponseWriter, r *http.Request) {
 		if email_taken {
 			fmt.Println("This email is already taken. Choose another one!")
 		} else {
-			uuid_crypted, err4 := bcrypt.GenerateFromPassword([]byte((uuid.NewV1()).String()), 14)
-			if err4 != nil {
-				fmt.Println(err)
-			}
+			uuid_crypted := ((uuid.NewV1()).String())
 			crypt_passwd, err5 := bcrypt.GenerateFromPassword([]byte(passwd), 14)
 			if err5 != nil {
 				fmt.Println(err)

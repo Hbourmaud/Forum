@@ -81,7 +81,7 @@ func MoreComment(w http.ResponseWriter, r *http.Request) {
 			var comment CommentStruct
 			for i := 0; i < len(Id_commentTab); i++ {
 				comment.Id_comment = Id_commentTab[i]
-				comment.Id_account = Id_accountTab[i]
+				comment.Id_account = idAccount_to_username(Id_accountTab[i])
 				comment.Comment = CommentTab[i]
 			}
 			DComment = append(DComment, comment)
@@ -125,11 +125,12 @@ func MoreComment(w http.ResponseWriter, r *http.Request) {
 
 		data := &Info{
 			Id_post:    int_uuid_post,
-			Id_account: id_account,
+			Id_account: idAccount_to_username(id_account),
 			Texts:      texts,
 			Title:      title,
 			Category:   category,
 			Comments:   DComment,
+			Picture:    picture,
 		}
 		err2 := tmpl.Execute(w, data)
 		if err2 != nil {

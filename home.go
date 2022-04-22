@@ -24,6 +24,7 @@ type Info struct {
 	Dislike            int
 	One_comment        string
 	One_comment_author string
+	One_comment_id     string
 	Comments           []CommentStruct
 }
 
@@ -89,7 +90,7 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 	var post Info
 	for i := 0; i < len(Id_postTab); i++ {
 		post.Id_post = Id_postTab[i]
-		post.Id_account = Id_accountTab[i]
+		post.Id_account = idAccount_to_username(Id_accountTab[i])
 		post.Title = TitleTab[i]
 		post.Category = CategoryTab[i]
 		post.Texts = TextsTab[i]

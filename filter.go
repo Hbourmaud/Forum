@@ -55,7 +55,7 @@ func filters(category string, user_uuid string, created_posts string, liked_post
 
 		for i := 0; i < len(Id_postTab); i++ {
 			post.Id_post = Id_postTab[i]
-			post.Id_account = Id_accountTab[i]
+			post.Id_account = idAccount_to_username(Id_accountTab[i])
 			post.Title = TitleTab[i]
 			post.Category = CategoryTab[i]
 			post.Texts = TextsTab[i]
@@ -66,7 +66,7 @@ func filters(category string, user_uuid string, created_posts string, liked_post
 		return DataTab
 	} else if category == "" {
 		if liked_posts == "liked_posts" {
-			rows, err := db.Query("SELECT id, texts, title, category, picture  FROM posts p JOIN likes l ON l.id_post = p.id WHERE l.id_account = (?);", user_uuid)
+			rows, err := db.Query("SELECT id, p.id_account, texts, title, category, picture  FROM posts p JOIN likes l ON l.id_post = p.id WHERE l.id_account = (?);", user_uuid)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -78,7 +78,7 @@ func filters(category string, user_uuid string, created_posts string, liked_post
 				var category string
 				var picture string
 
-				err = rows.Scan(&id_post, &texts, &title, &category, &picture)
+				err = rows.Scan(&id_post, &id_account, &texts, &title, &category, &picture)
 
 				if err != nil {
 					fmt.Println(err)
@@ -96,7 +96,7 @@ func filters(category string, user_uuid string, created_posts string, liked_post
 
 			for i := 0; i < len(Id_postTab); i++ {
 				post.Id_post = Id_postTab[i]
-				post.Id_account = Id_accountTab[i]
+				post.Id_account = idAccount_to_username(Id_accountTab[i])
 				post.Title = TitleTab[i]
 				post.Category = CategoryTab[i]
 				post.Texts = TextsTab[i]
@@ -136,7 +136,7 @@ func filters(category string, user_uuid string, created_posts string, liked_post
 
 			for i := 0; i < len(Id_postTab); i++ {
 				post.Id_post = Id_postTab[i]
-				post.Id_account = Id_accountTab[i]
+				post.Id_account = idAccount_to_username(Id_accountTab[i])
 				post.Title = TitleTab[i]
 				post.Category = CategoryTab[i]
 				post.Texts = TextsTab[i]
@@ -177,7 +177,7 @@ func filters(category string, user_uuid string, created_posts string, liked_post
 
 		for i := 0; i < len(Id_postTab); i++ {
 			post.Id_post = Id_postTab[i]
-			post.Id_account = Id_accountTab[i]
+			post.Id_account = idAccount_to_username(Id_accountTab[i])
 			post.Title = TitleTab[i]
 			post.Category = CategoryTab[i]
 			post.Texts = TextsTab[i]

@@ -38,7 +38,7 @@
         <div class="this_content">
             <div class="bar">
                 <div>
-                    <form action="/postcreation" method="POST">
+                    <form action="/postcreation" method="GET">
                         <button class="submitbutton" style="margin-right:5px" type="submit" value="create_post">create post</button>
                     </form>
                 </div>
@@ -53,9 +53,7 @@
                             <OPTION>others</OPTION>
                         </SELECT>
                         <button class="submitbutton" type="submit" value="filter">filter</button>
-                    </form>
                 </div>
-                <form>
                     <button class="submitbutton" type="submit" name="created_posts" value="created_posts"> created posts </button>
 			        <button class="submitbutton" type="submit" name="liked_posts" value="liked_posts"> liked posts </button>
                 </form>
@@ -64,32 +62,49 @@
                 {{range .DataTab}}
                     <div class="this_posts">
                         <div class="up">
-                            <div class="category1">{{ .Category}}</div>
+                            <div id="cat{{.Category}}" class="category1">{{ .Category}}</div>
                             <div class="this_is_title">{{ .Title}}</div>
                         </div>
                         <br>
                         {{ .Texts}}
+                        <div id="Pic{{.Picture}}">
                         <br>
-                        <img src="{{.Picture}}" width="100px">
+                        <img  src="{{.Picture}}" width="100px">
                         <br>
+                        </div>
                         <script>
                             var like = "like"
                             var dislike = "dislike"
                         </script>
                         <button class="none" id="{{.Id_post}}" onclick="actionLikeDislike(like,this.id,null)">👍</button><label>{{.Like}}</label>
                         <button class="none" id="{{.Id_post}}" onclick="actionLikeDislike(dislike,this.id,null)">👎</button><label>{{.Dislike}}</label>
+                        {{.Id_account}}
                         <br>
                         <br>
-                        <div class="this_comment">
+                        <div id="{{.One_comment_id}}" class="this_comment" >
                             <h1 style="font-size: 15px; font-family: sans-serif">Last comment:</h1>
                             <div class="this_is_title">{{.One_comment_author}}</div>
-                            <div class="comment_to_post">{{.One_comment}}</div>
+                            <div name="salut" class="comment_to_post">{{.One_comment}}</div>
                         </div>
                         <form action="/comment" method="POST">
                             <input type="hidden" id="uuid_post" name="uuid_post" value="{{.Id_post}}">
                             <button class="sub_button" type="submit" value="more_comments">view more comments</button>
                         </form>
                     </div>
+                    <script>
+                        var toDelPic = document.getElementById("Pic");
+                        var toDelCat = document.getElementById("cat");
+                        var toDel = document.getElementById("no");
+                        if (toDel != null){
+                            toDel.remove();
+                        }
+                        if (toDelPic != null){
+                            toDelPic.remove();
+                        }
+                        if (toDelCat != null){
+                            toDelCat.remove();
+                        }
+                    </script>
                 {{ end }}
         </div>
     </div>

@@ -15,6 +15,7 @@ func addDetailsPost(DataTab []Info) []Info {
 	var DislikeTab []int
 	var One_commentTab []string
 	var One_comment_authorTab []string
+	var One_comment_idTab []string
 	var DataTabFinal []Info
 	var post Info
 	for i := 0; i < len(DataTab); i++ {
@@ -26,8 +27,9 @@ func addDetailsPost(DataTab []Info) []Info {
 		post.Picture = DataTab[i].Picture
 		One_comment_authorTab = append(One_comment_authorTab, "")
 		One_commentTab = append(One_commentTab, "")
+		One_comment_idTab = append(One_comment_idTab, "no")
 
-		dataComment, err := db.Query("SELECT id_account, comment FROM comments WHERE id_post=(?) ORDER BY id DESC LIMIT 1", post.Id_post)
+		dataComment, err := db.Query("SELECT id,id_account, comment FROM comments WHERE id_post=(?) ORDER BY id DESC LIMIT 1", post.Id_post)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -36,13 +38,16 @@ func addDetailsPost(DataTab []Info) []Info {
 		for dataComment.Next() {
 			var Id_comment_author string
 			var Comment string
-			err = dataComment.Scan(&Id_comment_author, &Comment)
+			var Comment_id string
+			err = dataComment.Scan(&Comment_id, &Id_comment_author, &Comment)
 
 			if err != nil {
 				fmt.Println(err)
 			}
 			One_comment_authorTab[i] = Id_comment_author
 			One_commentTab[i] = Comment
+			One_comment_idTab[i] = Comment_id
+
 		}
 
 		dataLike, err2 := db.Query("SELECT count() FROM likes WHERE id_post=(?)", post.Id_post)
@@ -71,10 +76,35 @@ func addDetailsPost(DataTab []Info) []Info {
 			DislikeTab = append(DislikeTab, dislike_post)
 		}
 		post.One_comment = One_commentTab[i]
-		post.One_comment_author = One_comment_authorTab[i]
+		post.One_comment_author = idAccount_to_username(One_comment_authorTab[i])
+		post.One_comment_id = One_comment_idTab[i]
 		post.Like = LikeTab[i]
 		post.Dislike = DislikeTab[i]
 		DataTabFinal = append(DataTabFinal, post)
 	}
 	return DataTabFinal
+}
+
+func idAccount_to_username(id_account string) string {
+	if id_account == "" {
+		return ""
+	}
+	db, err := sql.Open("sqlite3", "./forum.db")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer db.Close()
+	dataUserName, err := db.Query("SELECT username FROM authentication WHERE UUID=(?)", id_account)
+	if err != nil {
+		fmt.Println("error", err)
+	}
+	defer dataUserName.Close()
+	var username string
+	for dataUserName.Next() {
+		err = dataUserName.Scan(&username)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+	return username
 }

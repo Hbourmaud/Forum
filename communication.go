@@ -14,6 +14,7 @@ type PostIdStruct struct {
 func CreationPost(w http.ResponseWriter, r *http.Request) {
 
 	tmpl := template.Must(template.ParseFiles("static/postcreation.html"))
+	data := ""
 
 	switch r.Method {
 	case "GET":
@@ -32,6 +33,10 @@ func CreationPost(w http.ResponseWriter, r *http.Request) {
 
 		if title == "" {
 
+		} else if title == "tooBig" && content == "" {
+			data = " File is too big, Maximum 20mb file accepted"
+		} else if title == "wrongType" && content == "" {
+			data = " Wrong type file, please upload JPG, PNG or GIF"
 		} else {
 			// Cela permet d'ouvrir et fermer la database
 			db, err := sql.Open("sqlite3", "./forum.db")
@@ -43,7 +48,7 @@ func CreationPost(w http.ResponseWriter, r *http.Request) {
 			// Je récupère l'UUID de la personne pour prouver que ce poste est bien à lui
 			rows, err := db.Query("SELECT UUID FROM authentication WHERE UUID=(?);", uuid_user)
 			if err != nil {
-				fmt.Println(err)
+				fmt.Println("erroruuid", err)
 			}
 
 			for rows.Next() {
@@ -64,7 +69,7 @@ func CreationPost(w http.ResponseWriter, r *http.Request) {
 			http.Redirect(w, r, "/", http.StatusSeeOther)
 		}
 	}
-	data := ""
+
 	tmpl.Execute(w, data)
 }
 

@@ -14,7 +14,7 @@
     <div clas="apple">
         <div class="Trafalgar">
             <div class="mad_cow_disease">
-                <a class="goback" href="index">  ← go back to the main page </a>
+                <a class="goback" href="/">  ← go back to the main page </a>
             </div>
             <div class="joan_of_arc">
             <p>Create a post</p>
@@ -47,6 +47,12 @@
             <br>
             <button class="submitbutton" type="submit">Submit</button>
         </form>
+        <div id="err_sentence"><div></div>{{.}}</div>
     </div>
 </body>
+<script>
+    if (document.getElementById('err_sentence').childNodes.length === 0){
+        document.getElementById('err_sentence').remove();
+    }
+</script>
 </html>
