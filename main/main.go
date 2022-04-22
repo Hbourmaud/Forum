@@ -37,6 +37,8 @@ func main() {
 	})
 	fs := http.FileServer(http.Dir("static/"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	fs2 := http.FileServer(http.Dir("img/"))
+	http.Handle("/img/", http.StripPrefix("/img/", fs2))
 
 	err := http.ListenAndServe("localhost:8081", nil)
 

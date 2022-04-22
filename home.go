@@ -19,6 +19,7 @@ type Info struct {
 	Texts              string
 	Title              string
 	Category           string
+	Picture            string
 	Like               int
 	Dislike            int
 	One_comment        string
@@ -44,6 +45,7 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 	var TextsTab []string
 	var TitleTab []string
 	var CategoryTab []string
+	var PictureTab []string
 
 	//Cela permet d'ouvrir et de fermer la database
 	db, err := sql.Open("sqlite3", "./forum.db")
@@ -68,7 +70,7 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 		var texts string
 		var Title string
 		var category string
-		var picture string
+		var picture sql.NullString
 
 		err = dataPost.Scan(&id_post, &id_account, &Title, &texts, &category, &picture)
 
@@ -81,6 +83,7 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 		TextsTab = append(TextsTab, texts)
 		TitleTab = append(TitleTab, Title)
 		CategoryTab = append(CategoryTab, category)
+		PictureTab = append(PictureTab, picture.String)
 
 	}
 	var post Info
@@ -90,6 +93,7 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 		post.Title = TitleTab[i]
 		post.Category = CategoryTab[i]
 		post.Texts = TextsTab[i]
+		post.Picture = PictureTab[i]
 
 		DataTab = append(DataTab, post)
 	}

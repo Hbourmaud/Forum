@@ -17,15 +17,17 @@
             }),
         })
 		window.location.reload();
-    } 
+    }
 </script>
 <body>
 	<div>
-        <a href="authentication">Register</a>
-        <a href="login">Login</a>
+        <div id="disappear">
+            <a href="authentication">Register</a>
+            <a href="login">Login</a>
+        </div>
         <h1>{{.Username}}</h1>
-        <a href="logout">Logout</a>
-        <form action="/postcreation" method="POST">
+        <a id="logout" href="logout">Logout</a>
+        <form action="/postcreation" method="get">
             <button class="sub button" type="submit" value="create_post">create post</button>
         </form>
 		<form action="/" method="POST">
@@ -48,6 +50,7 @@
         {{ .Title}}
         {{ .Category}}
         {{ .Texts}}
+        <img src="{{.Picture}}" width="100px">
     <script>
         var like = "like"
         var dislike = "dislike"
@@ -63,4 +66,11 @@
     </form>
     {{ end }}
 </body>
+<script>
+    if (document.cookie.match(/^(.*;)?\s*uuid_hash\s*=\s*[^;]+(.*)?$/)){
+        document.getElementById('disappear').remove();
+    }else{
+        document.getElementById('logout').remove();
+    }
+</script>
 </html>

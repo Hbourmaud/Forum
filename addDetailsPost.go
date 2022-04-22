@@ -23,6 +23,7 @@ func addDetailsPost(DataTab []Info) []Info {
 		post.Title = DataTab[i].Title
 		post.Category = DataTab[i].Category
 		post.Texts = DataTab[i].Texts
+		post.Picture = DataTab[i].Picture
 		One_comment_authorTab = append(One_comment_authorTab, "")
 		One_commentTab = append(One_commentTab, "")
 

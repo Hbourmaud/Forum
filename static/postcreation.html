@@ -7,17 +7,18 @@
     <title>Creation of post</title>
 </head>
 <body>
-    <form method="post" action="/postcreation">
+    <form id="form" enctype="multipart/form-data" method="post" action="/postcreation">
         <label>Title</label><input name="title" type="text" value="" required="required" />
         <label>Content</label><input name="content" type="text" value="" required="required" />
 		<SELECT id="category" name="category" size="1">
-			<OPTION>
-			<OPTION>politic
-			<OPTION>sport
-			<OPTION>entertainment
-			<OPTION>others
+			<option></option>
+			<option>politic</option>
+			<option>sport</option>
+			<option>entertainment</option>
+			<option>others</option>
 		</SELECT>
-        <input type="submit" value="submit" />
+        <input type="file" name="picture" />
+        <button type="submit">submit</button>
     </form>
 </body>
 </html>
