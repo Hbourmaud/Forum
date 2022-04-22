@@ -4,21 +4,49 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"type="text/css" href="static/style.css"/>
     <title>Creation of post</title>
 </head>
 <body>
-    <form id="form" enctype="multipart/form-data" method="post" action="/postcreation">
-        <label>Title</label><input name="title" type="text" value="" required="required" />
-        <label>Content</label><input name="content" type="text" value="" required="required" />
-		<SELECT id="category" name="category" size="1">
-			<option></option>
-			<option>politic</option>
-			<option>sport</option>
-			<option>entertainment</option>
-			<option>others</option>
-		</SELECT>
-        <input type="file" name="picture" />
-        <button type="submit">submit</button>
-    </form>
+    <div class="header">
+        <h1>Forum</h1>
+    </div>
+    <div clas="apple">
+        <div class="Trafalgar">
+            <div class="mad_cow_disease">
+                <a class="goback" href="index">  ← go back to the main page </a>
+            </div>
+            <div class="joan_of_arc">
+            <p>Create a post</p>
+            </div>
+        </div>
+        <br>
+        <form id="form" enctype="multipart/form-data" method="post" action="/postcreation">
+            <div>
+                <textarea class="buckingham" name="title" placeholder="write the title" type="text" value="" required="required" rows="1" cols="50" maxlength="75"></textarea>
+            </div>
+            <br>
+            <div>
+                <textarea class="buckingham" placeholder="write content" name="content" type="text" value="" required="required" rows="10" cols="80"></textarea>
+            </div>
+            <br>
+            <SELECT class="thisbutton" id="category" name="category" size="1">
+                <option value="" disabled selected>Select a category</option>
+                <OPTION>politic</OPTION>
+                <OPTION>sport</OPTION>
+                <OPTION>entertainment</OPTION>
+                <OPTION>others</OPTION>
+            </SELECT>
+            <br>
+            <br>
+            <label for="file-upload" class="chooseimg">
+                Choose a picture
+            </label>
+            <input id="file-upload" class="chooseimg" type="file" name="picture" />
+            <br>
+            <br>
+            <button class="submitbutton" type="submit">Submit</button>
+        </form>
+    </div>
 </body>
 </html>

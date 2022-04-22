@@ -9,21 +9,27 @@
 </head>
 <body>
     <div>
+        <div class="header">
+            <h1>Forum</h1>
+        </div>
+        <div>
+            <a class="goback" href="index">  ← go back to the main page </a>
+        </div>
     <div class="apple">
         <div class="sign">
         <h1>Sign In</h1> </div>
     
         <form action="/login" method="POST">
             <div class="emails">
-            <input type="text" id="email" name="email" placeholder="Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Entering a valid email" required="required"> 
+            <input class="frame" type="text" id="email" name="email" placeholder="Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Entering a valid email" required="required"> 
             </div>
             <br>
             <div class="passwords">
-            <input type="password" id="passwd" name="passwd" placeholder="Password" pattern="^.{5,}$" title="Invalid Password" required="required">
+            <input class="frame" type="password" id="passwd" name="passwd" placeholder="Password" pattern="^.{5,}$" title="Invalid Password" required="required">
           </div>
             <br>
             <div class="submits">
-            <button type="submit" value="Login">Login</button>
+            <button class="thisbutton" type="submit" value="Login">Login</button>
            </div>
             </form>
             <div class="account">

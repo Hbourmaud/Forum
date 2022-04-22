@@ -8,6 +8,12 @@
     <title>Forum</title>
 </head>
 <body>
+    <div class="header">
+        <h1>Forum</h1>
+    </div>
+    <div>
+        <a class="goback" href="index">  ← go back to the main page </a>
+    </div>
     <div>
         <form action="/authentication" method="POST">
             <div class="orange">
@@ -16,14 +22,14 @@
             </div>
             <br>
             <div class="users">
-            <input type="text" id="username" name="username" placeholder="Username" required="required"> </div>
+            <input class="frame" type="text" id="username" name="username" placeholder="Username" required="required"> </div>
             <div class="mails">
-            <input type="text" id="email" name="email" placeholder="Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Entering a valid email" required="required"> </div>
+            <input class="frame" type="text" id="email" name="email" placeholder="Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Entering a valid email" required="required"> </div>
             <div class="passwordss">
-            <input type="password" id="passwd" name="passwd" placeholder="Password" pattern="^.{5,}$" title="Enter a password with 5 character minimum" required="required"> 
+            <input class="frame" type="password" id="passwd" name="passwd" placeholder="Password" pattern="^.{5,}$" title="Enter a password with 5 character minimum" required="required"> 
         </div>
             <div class="subs">
-            <button type="submit" value="Register">Register</button> </div>
+            <button class="thisbutton" type="submit" value="Register">Register</button> </div>
         </form>
         <div class="logs">
         <a href="login"> Already have an account ?</a> </div>

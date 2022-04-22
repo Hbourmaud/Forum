@@ -4,13 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"type="text/css" href="static/style.css"/>
     <title>Publication of a comment</title>
 </head>
 <body>
+    <div class="header">
+        <h1>Forum</h1>
+    </div>
+    <div class="mad_cow_disease">
+        <a class="goback" href="index">  ← go back to the main page </a>
+    </div>
+    <div class="joan_of_arc">
+    <p>Write a comment</p>
+    </div>
     <form method="post" action="/commentcreation">
         <input type="hidden" id="uuid_post" name="uuid_post" value={{.Id_post}}>
-        <label>Content</label><input name="content" type="text" value="" required="required"/>
-        <input type="submit" value="submit" />
+        <div class="tower_bridge">
+            <textarea class="buckingham" placeholder="write a comment" name="content" type="text" value="" required="required" rows="10" cols="80"></textarea>
+        </div>
+        <input class="submitbutton" type="submit" value="submit" />
     </form>
 </body>
 </html>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"type="text/css" href="static/style.css"/>
     <title>More comments</title>
 </head>
 <script>
@@ -20,27 +21,57 @@
     }
 </script>
 <body>
+    <div class="header">
+        <h1>Forum</h1>
+    </div>
+    <style>
+        body {
+        background-color:  whitesmoke;
+        }
+    </style>
     <div>
-		{{ .Id_post}}
-		{{ .Id_account}}
-		{{ .Title}}
-		{{ .Texts}}
-		{{ .Category}}
+        <a class="goback" href="index">  ← go back to the main page </a>
+    </div>
+    <br>
+    <div>
+        <div class="lost">
+            <div class="account">
+                <p>{{ .Id_account}}</p>
+            </div>
+            <div class="tittle_post">
+                <p>{{ .Title}}</p>
+            </div>
+            <div class="the_comment">
+            <p>{{ .Texts}}</p>
+            </div>
+            <div>
+            <p class="category">{{ .Category}}</p>
+            </div>
+        </div>
+        <br>
             <form action="/commentcreation" method="POST">
                 <input type="hidden" id="uuid_post" name="uuid_post" value="{{.Id_post}}">
-                <button class="sub button" type="submit" value="create_comment">create comment</button>
+                <button class="submitbutton1" type="submit" value="create_comment">create comment</button>
             </form>
-        </div>
+    </div>
+    <br>
 		{{ range .Comments}}
-			{{ .Id_comment }}
-			{{ .Id_account }}
-			{{ .Comment }}
+        <br>
+        <div class="commenting">
+            <div>
+                {{ .Id_account }}
+            </div>
+            <div>
+                {{ .Comment }}
+            </div>
             <script>
                 var like = "like"
                 var dislike = "dislike"
             </script>
             <button id="{{.Id_comment}}" onclick="actionLikeDislike(like,null,this.id)">Like</button>{{.Like_comment}}
             <button id="{{.Id_comment}}" onclick="actionLikeDislike(dislike,null,this.id)">Dislike</button>{{.Dislike_comment}}
+        </div>
+        <br>
 		{{ end }}
 </body>
 </html>
