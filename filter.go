@@ -13,10 +13,7 @@ func filters(category string, user_uuid string, created_posts string, liked_post
 	var TextsTab []string
 	var TitleTab []string
 	var CategoryTab []string
-	// var LikeTab []int
-	// var DislikeTab []int
-	// var One_commentTab []string
-	// var One_comment_authorTab []string
+	var PictureTab []string
 
 	//Cela permet d'ouvrir et de fermer la database
 	db, err := sql.Open("sqlite3", "./forum.db")
@@ -51,6 +48,7 @@ func filters(category string, user_uuid string, created_posts string, liked_post
 			TextsTab = append(TextsTab, texts)
 			TitleTab = append(TitleTab, title)
 			CategoryTab = append(CategoryTab, category)
+			PictureTab = append(PictureTab, picture)
 		}
 
 		var post Info
@@ -61,13 +59,14 @@ func filters(category string, user_uuid string, created_posts string, liked_post
 			post.Title = TitleTab[i]
 			post.Category = CategoryTab[i]
 			post.Texts = TextsTab[i]
+			post.Picture = PictureTab[i]
 
 			DataTab = append(DataTab, post)
 		}
 		return DataTab
 	} else if category == "" {
 		if liked_posts == "liked_posts" {
-			rows, err := db.Query("SELECT id, texts, title, category  FROM posts p JOIN likes l ON l.id_post = p.id WHERE l.id_account = (?);", user_uuid)
+			rows, err := db.Query("SELECT id, texts, title, category, picture  FROM posts p JOIN likes l ON l.id_post = p.id WHERE l.id_account = (?);", user_uuid)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -77,8 +76,9 @@ func filters(category string, user_uuid string, created_posts string, liked_post
 				var texts string
 				var title string
 				var category string
+				var picture string
 
-				err = rows.Scan(&id_post, &texts, &title, &category)
+				err = rows.Scan(&id_post, &texts, &title, &category, &picture)
 
 				if err != nil {
 					fmt.Println(err)
@@ -89,6 +89,7 @@ func filters(category string, user_uuid string, created_posts string, liked_post
 				TextsTab = append(TextsTab, texts)
 				TitleTab = append(TitleTab, title)
 				CategoryTab = append(CategoryTab, category)
+				PictureTab = append(PictureTab, picture)
 			}
 
 			var post Info
@@ -99,6 +100,7 @@ func filters(category string, user_uuid string, created_posts string, liked_post
 				post.Title = TitleTab[i]
 				post.Category = CategoryTab[i]
 				post.Texts = TextsTab[i]
+				post.Picture = PictureTab[i]
 
 				DataTab = append(DataTab, post)
 			}
@@ -127,6 +129,7 @@ func filters(category string, user_uuid string, created_posts string, liked_post
 				TextsTab = append(TextsTab, texts)
 				TitleTab = append(TitleTab, title)
 				CategoryTab = append(CategoryTab, category)
+				PictureTab = append(PictureTab, picture)
 			}
 
 			var post Info
@@ -137,6 +140,7 @@ func filters(category string, user_uuid string, created_posts string, liked_post
 				post.Title = TitleTab[i]
 				post.Category = CategoryTab[i]
 				post.Texts = TextsTab[i]
+				post.Picture = PictureTab[i]
 
 				DataTab = append(DataTab, post)
 			}
@@ -166,6 +170,7 @@ func filters(category string, user_uuid string, created_posts string, liked_post
 			TextsTab = append(TextsTab, texts)
 			TitleTab = append(TitleTab, title)
 			CategoryTab = append(CategoryTab, category)
+			PictureTab = append(PictureTab, picture)
 		}
 
 		var post Info
@@ -176,6 +181,7 @@ func filters(category string, user_uuid string, created_posts string, liked_post
 			post.Title = TitleTab[i]
 			post.Category = CategoryTab[i]
 			post.Texts = TextsTab[i]
+			post.Picture = PictureTab[i]
 
 			DataTab = append(DataTab, post)
 		}
