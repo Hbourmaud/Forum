@@ -31,7 +31,7 @@
             <br>
             <h1>{{.Username}}</h1>
             <br>
-            <a id="logout" href="logout">Logout</a>
+            <a class="marginleft" id="logout" href="logout">↦🚪 Logout</a>
         </div>
     </div>
     <div>
@@ -39,7 +39,7 @@
             <div class="bar">
                 <div>
                     <form action="/postcreation" method="GET">
-                        <button class="submitbutton" style="margin-right:5px" type="submit" value="create_post">create post</button>
+                        <button class="submitbutton margin" type="submit" value="create_post">create post</button>
                     </form>
                 </div>
                 <div>
@@ -56,33 +56,37 @@
                 </div>
                     <button class="submitbutton" type="submit" name="created_posts" value="created_posts"> created posts </button>
 			        <button class="submitbutton" type="submit" name="liked_posts" value="liked_posts"> liked posts </button>
-                </form>
+            </form>
+                    <a class="none marginleft" href="/">↻</a>
             </div>
             <br>
                 {{range .DataTab}}
                     <div class="this_posts">
+                        <div class="account">
+                            <h1>{{ .Id_account}}</h1>
+                        </div>
+                        <br>
                         <div class="up">
                             <div id="cat{{.Category}}" class="category1">{{ .Category}}</div>
                             <div class="this_is_title">{{ .Title}}</div>
                         </div>
                         <br>
-                        {{ .Texts}}
-                        <div id="Pic{{.Picture}}">
-                        <br>
-                        <img  src="{{.Picture}}" width="100px">
+                        {{ .Texts}}   
+                        <div id="Pic{{.Picture}}" >         
+                        <br><br>
+                        <img class="photo" src="{{.Picture}}" width="100px">
                         <br>
                         </div>
                         <script>
                             var like = "like"
                             var dislike = "dislike"
                         </script>
-                        <button class="none" id="{{.Id_post}}" onclick="actionLikeDislike(like,this.id,null)">👍</button><label>{{.Like}}</label>
-                        <button class="none" id="{{.Id_post}}" onclick="actionLikeDislike(dislike,this.id,null)">👎</button><label>{{.Dislike}}</label>
-                        {{.Id_account}}
+                        <button class="none" id="{{.Id_post}}" onclick="actionLikeDislike(like,this.id,null)">👍 </button><label>{{.Like}}</label>
+                        <button class="none" id="{{.Id_post}}" onclick="actionLikeDislike(dislike,this.id,null)">👎 </button><label>{{.Dislike}}</label>
                         <br>
                         <br>
                         <div id="{{.One_comment_id}}" class="this_comment" >
-                            <h1 style="font-size: 15px; font-family: sans-serif">Last comment:</h1>
+                            <h1 class="dumb">Last comment:</h1>
                             <div class="this_is_title">{{.One_comment_author}}</div>
                             <div name="salut" class="comment_to_post">{{.One_comment}}</div>
                         </div>

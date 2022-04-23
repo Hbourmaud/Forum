@@ -19,7 +19,7 @@ h1 {
 
 .apple{
     background-color:#f9faff;
-    margin-top:15%;
+    margin-top:5%;
     border-style: solid;
     border-radius: 25px;
     border-width: 4px;
@@ -42,10 +42,6 @@ h1 {
     padding: 5px;
 }
 
-.passwords{
-    text-align: center;
-    padding: 5px;
-}
 
 .submits{
     text-align: center;
@@ -53,13 +49,13 @@ h1 {
 }
 
 .account{
-    text-align: center;
-    padding: 5px;
+    text-align: left;
+    padding-left: 5px;
 }
 
 .orange{
     background-color:#f9faff;
-    margin-top:15%;
+    margin-top:5%;
     border-style: solid;
     border-radius: 25px;
     border-width: 4px;
@@ -78,16 +74,6 @@ h1 {
     text-align: center;
     padding: 5px;
     
-}
-
-.mails{
-    text-align: center;
-    padding: 5px;
-}
-
-.passwordss{
-    text-align: center;
-    padding: 5px;
 }
 
 .subs{
@@ -129,8 +115,7 @@ h1 {
 
 .thisbutton:hover {
     transition: 0.3s all;
-    background-color:whitesmoke;
-    transform: scale(1.1);
+    background-color:rgb(226, 225, 225);
 }
 
 .goback{
@@ -195,15 +180,18 @@ h1 {
 }
 
 .lost{
-    margin-left: 30%;
     display: inline-block;
     background-color: white;
     border: 2px solid black;
-    padding: 5px
-}
+    padding: 5px;
+    border-radius:3px;
+    width: 99%;
+    padding-right: 5px;
+    }
 
-.account{
+.account1{
     font-family: sans-serif;
+    margin-left: 30%
 }
 
 .tittle_post{
@@ -247,7 +235,6 @@ h1 {
 
 .submitbutton1{
     margin-top: 3px;
-    margin-left: 30%;
     padding: 10px 20px;
     text-align: bottom center;
     display: inline-block;
@@ -267,12 +254,15 @@ h1 {
 
 .commenting{
     padding: 10px;
-    display: inline-block;
+    float: center;
     align-items: stretch;
     flex-wrap: wrap;
-    margin-left: 30%;
     background-color: white;
     word-wrap: break-word;
+    font-family: sans-serif;
+    font-size: 16px;
+    width: 1000px;
+    border-radius: 3px;
 }
 
 .header  {
@@ -282,6 +272,7 @@ h1 {
     width: auto;
     margin: 10px;
     font-family: sans-serif;
+    padding: 5px
 }
 
 .vertical{
@@ -411,6 +402,54 @@ h1 {
     border: 1px solid black;
 }
 
-input[type="file"] {
+/*input[type="file"] {
     display: none;
 }
+*/
+.photo { 
+    background-color:#fafbfc; 
+    border:1px solid #b0b0b0; 
+    margin:0 0 10px 10px; 
+    padding:5px; 
+    width: 25%;
+    height: 12%;
+  }
+
+  .id_account{
+    font-weight: bold;
+  }
+  
+  #file-chosen{
+    margin-left: 0.3rem;
+    font-family: sans-serif;
+  }
+
+  .marginleft{
+      margin-left: 10px;
+      font-size: 25px;
+      margin-top: 5px;
+      text-decoration: none;
+  }
+
+.err_mess{
+      font-size: 15px;
+      font-family: sans-serif;
+      margin-left: 5px;
+      margin-top: 5px;
+      border-radius: 3px;
+      padding: 2px;
+      font-weight: bold;
+  }
+
+  .dumb{
+    font-size: 15px; 
+    font-family: sans-serif
+  }
+
+  .margin{
+    margin-right:5px
+  }
+
+  .background_white{
+    background-color:  whitesmoke;
+  }
