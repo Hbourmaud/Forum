@@ -20,46 +20,37 @@
 		window.location.reload();
     }
 </script>
-<body>
+<body class="background_white">
     <div class="header">
         <h1>Forum</h1>
     </div>
-    <style>
-        body {
-        background-color:  whitesmoke;
-        }
-    </style>
     <div>
-        <a class="goback" href="/">  ← go back to the main page </a>
+        <a class="goback marginbottom" href="/">  ← go back to the main page </a>
     </div>
-    <br>
     <div>
-        <div class="lost">
-            <div class="account">
-                <p>{{ .Id_account}}</p>
+        <div class="postcomment marginbottom">
+            <div>
+                <div class="displayflex">
+                    <div class="category1">{{ .Category}}</div>
+                    <div class="account">{{ .Title}}</div>
+                </div>
             </div>
-            <div class="tittle_post">
-                <p>{{ .Title}}</p>
+            <div class="this_is_title">
+               by {{ .Id_account}}
             </div>
-            <div class="the_comment">
+            <div class="marginbottom">
             <p>{{ .Texts}}</p>
             </div>
-            <img src="{{.Picture}}" width="100px">
-            <div>
-            <p class="category">{{ .Category}}</p>
-            </div>
+            <img class="photo marginbottom" src="{{.Picture}}" width="100px">
         </div>
-        <br>
             <form action="/commentcreation" method="POST">
                 <input type="hidden" id="uuid_post" name="uuid_post" value="{{.Id_post}}">
                 <button class="submitbutton1" type="submit" value="create_comment">create comment</button>
             </form>
     </div>
-    <br>
 		{{ range .Comments}}
-        <br>
-        <div class="commenting">
-            <div>
+        <div class="commenting marginbottom">
+            <div class="id_account">
                 {{ .Id_account }}
             </div>
             <div>
@@ -69,10 +60,9 @@
                 var like = "like"
                 var dislike = "dislike"
             </script>
-            <button id="{{.Id_comment}}" onclick="actionLikeDislike(like,null,this.id)">Like</button>{{.Like_comment}}
-            <button id="{{.Id_comment}}" onclick="actionLikeDislike(dislike,null,this.id)">Dislike</button>{{.Dislike_comment}}
+            <button class="none" id="{{.Id_comment}}" onclick="actionLikeDislike(like,null,this.id)">👍</button>{{.Like_comment}}
+            <button class="none" id="{{.Id_comment}}" onclick="actionLikeDislike(dislike,null,this.id)">👎</button>{{.Dislike_comment}}
         </div>
-        <br>
 		{{ end }}
 </body>
 </html>

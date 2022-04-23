@@ -11,16 +11,16 @@
     <div class="header">
         <h1>Forum</h1>
     </div>
-    <div class="mad_cow_disease">
+    <div class="floatleft">
         <a class="goback" href="/">  ← go back to the main page </a>
     </div>
-    <div class="joan_of_arc">
+    <div class="createpost">
     <p>Write a comment</p>
     </div>
     <form method="post" action="/commentcreation">
         <input type="hidden" id="uuid_post" name="uuid_post" value={{.Id_post}}>
-        <div class="tower_bridge">
-            <textarea class="buckingham" placeholder="write a comment" name="content" type="text" value="" required="required" rows="10" cols="80"></textarea>
+        <div class="margin20px">
+            <textarea class="border3px" placeholder="write a comment" name="content" type="text" value="" required="required" rows="10" cols="80"></textarea>
         </div>
         <input class="submitbutton" type="submit" value="submit" />
     </form>

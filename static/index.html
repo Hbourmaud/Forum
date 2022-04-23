@@ -23,20 +23,18 @@
 <body>
     <div class="header">
         <h1>Forum</h1>
-        <div class="info">
-            <div id="disappear">
+        <div class="floatright">
+            <div class="marginbottom" id="disappear">
                 <a href="authentication">Register</a>
                 <a href="login">Login</a>
             </div>
-            <br>
-            <h1>{{.Username}}</h1>
-            <br>
+            <h1 class="marginbottom marginbottom">{{.Username}}</h1>
             <a class="marginleft" id="logout" href="logout">↦🚪 Logout</a>
         </div>
     </div>
     <div>
-        <div class="this_content">
-            <div class="bar">
+        <div class="marginleft20px">
+            <div class="displayflex marginbottom">
                 <div>
                     <form action="/postcreation" method="GET">
                         <button class="submitbutton margin" type="submit" value="create_post">create post</button>
@@ -59,34 +57,29 @@
             </form>
                     <a class="none marginleft" href="/">↻</a>
             </div>
-            <br>
                 {{range .DataTab}}
                     <div class="this_posts">
-                        <div class="account">
-                            <h1>{{ .Id_account}}</h1>
-                        </div>
-                        <br>
-                        <div class="up">
+                        <div class="displayflex marginbottom">
                             <div id="cat{{.Category}}" class="category1">{{ .Category}}</div>
-                            <div class="this_is_title">{{ .Title}}</div>
+                            <div class="account">{{ .Title}}</div>
                         </div>
-                        <br>
-                        {{ .Texts}}   
-                        <div id="Pic{{.Picture}}" >         
-                        <br><br>
-                        <img class="photo" src="{{.Picture}}" width="100px">
-                        <br>
+                        <div class="this_is_title marginbottom">
+                            by {{ .Id_account}}
+                        </div>
+                        <div class="fontsize15px marginleft10px">
+                        {{ .Texts}}  
+                    </div> 
+                        <div class="marginbottom" id="Pic{{.Picture}}" >         
+                        <img class="photo marginbottom" src="{{.Picture}}" width="100px">
                         </div>
                         <script>
                             var like = "like"
                             var dislike = "dislike"
                         </script>
                         <button class="none" id="{{.Id_post}}" onclick="actionLikeDislike(like,this.id,null)">👍 </button><label>{{.Like}}</label>
-                        <button class="none" id="{{.Id_post}}" onclick="actionLikeDislike(dislike,this.id,null)">👎 </button><label>{{.Dislike}}</label>
-                        <br>
-                        <br>
+                        <button class="none marginbottom" id="{{.Id_post}}" onclick="actionLikeDislike(dislike,this.id,null)">👎 </button><label>{{.Dislike}}</label>
                         <div id="{{.One_comment_id}}" class="this_comment" >
-                            <h1 class="dumb">Last comment:</h1>
+                            <h1 class="fontsize15px">Last comment:</h1>
                             <div class="this_is_title">{{.One_comment_author}}</div>
                             <div name="salut" class="comment_to_post">{{.One_comment}}</div>
                         </div>

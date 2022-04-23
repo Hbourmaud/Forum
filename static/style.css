@@ -1,23 +1,13 @@
 body{
     background-color: white;
 }
-.box
-{
-    width: 100%;
-    display: inline-block;
-    border: 5px solid rgb(163, 160, 160);
-}
-.littlebox{
-    margin-left: 80%;
-    border: 2px solid grey;
-}
 
 h1 {
     display: inline;
     clear: none;
 }
 
-.apple{
+.login{
     background-color:#f9faff;
     margin-top:5%;
     border-style: solid;
@@ -37,54 +27,26 @@ h1 {
     padding: 30px;
 }
 
-.emails{
+.textalign_padding{
     text-align: center;
     padding: 5px;
 }
 
-
-.submits{
-    text-align: center;
-    padding: 5px;
-}
 
 .account{
     text-align: left;
     padding-left: 5px;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 25px
 }
 
-.orange{
-    background-color:#f9faff;
-    margin-top:5%;
-    border-style: solid;
-    border-radius: 25px;
-    border-width: 4px;
-    border-color:rgb(112, 127, 159);
-    width:400px;
-    padding:20px;
-    margin-left: auto;
-    margin-right: auto;
-}
 .register{
     text-align: center;
     color:#8d85ac;
     font-family: sans-serif;
 }
-.users{
-    text-align: center;
-    padding: 5px;
-    
-}
 
-.subs{
-    text-align: center;
-    padding: 5px;
-}
-
-.logs{
-    text-align: center;
-    padding: 5px;
-}
 
 .frame{
     padding: 5px 15px;
@@ -155,31 +117,31 @@ h1 {
     background-color:rgb(222, 221, 221);
 }
 
-.Trafalgar{
+.textalignleft{
     text-align: left;
 }
 
-.mad_cow_disease{
+.floatleft{
     float: left;
 }
 
-.joan_of_arc{
+.createpost{
     margin-left: 45%;
     font-size: 25px;
     font-family: sans-serif;
     font-weight: bold;
 }
 
-.tower_bridge{
+.margin20px{
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
-.buckingham{
+.border3px{
     border: 3px solid #8d85ac;
 }
 
-.lost{
+.postcomment{
     display: inline-block;
     background-color: white;
     border: 2px solid black;
@@ -194,44 +156,7 @@ h1 {
     margin-left: 30%
 }
 
-.tittle_post{
-    font-family: sans-serif;
-    font-size: 20px;
-    font-weight: bold;
-}
 
-.the_comment{
-    align-items: stretch;
-    flex-wrap: wrap;
-    display: inline-flex;
-    border: 1px solid black;
-    background-color: white;
-    z-index: 999;
-     padding-top: 1%;
-     padding-bottom: 1%;
-     padding-left:2%;
-     padding-right: 2%;
-     top: 1px;
-     border-radius: 10px;
-     word-wrap: break-word;
-     font-family: sans-serif;
-  }
-
-
-
-.category{
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left:10px;
-    padding-right:10px;
-    align-items: stretch;
-    flex-wrap: wrap;
-    display: inline-flex;
-    border: 1px solid black;
-    background-color: grey;
-     border-radius: 10px;
-     font-family: sans-serif;
-}
 
 .submitbutton1{
     margin-top: 3px;
@@ -275,29 +200,7 @@ h1 {
     padding: 5px
 }
 
-.vertical{
-    border-left: 4px solid black;
-    height: 100%;
-    display: inline-block;
-    margin-top: 5px;
-    margin-left: 10px;
-    margin-right: 10px;
-    
-}
-
-.full_page{
-        position:fixed;
-        padding:0;
-        margin: 0;
-        top:0;
-        left:0;
-        width: 100%;
-        height: 100%;
-        font-size: 12px;
-        font-family: sans-serif;
-}
-
-.this_content{
+.marginleft20px{
     margin-left: 20px;
 }
 
@@ -308,7 +211,7 @@ h1 {
     margin-bottom:10px;
 }
 
-.info{
+.floatright{
     float: right;
 }
 
@@ -320,7 +223,7 @@ h1 {
 }
 
 .comment_to_post{
-    margin-left: 5px;
+    margin-left: 10px;
     font-family: sans-serif;
 }
 
@@ -343,9 +246,7 @@ h1 {
     transform: scale(1.1);
 }
 
-.bar{
-    display: flex;
-}
+
 
 .category1{
     padding-top: 5px;
@@ -363,7 +264,7 @@ h1 {
      flex-wrap: wrap;
 }
 
-.up{
+.displayflex{
     display: flex;
 }
 
@@ -387,25 +288,6 @@ h1 {
     background-color:rgb(222, 221, 221);
 }
 
-.chooseimg{
-    padding: 10px 20px;
-    text-align: bottom center;
-    display: inline-block;
-    font-size: 12px;
-    cursor: pointer;
-    transition: 0.3s all;
-    background-color:white;
-    color: black;
-    border-radius:10px;
-    font-family: sans-serif;
-    font-weight: bold;
-    border: 1px solid black;
-}
-
-/*input[type="file"] {
-    display: none;
-}
-*/
 .photo { 
     background-color:#fafbfc; 
     border:1px solid #b0b0b0; 
@@ -441,7 +323,7 @@ h1 {
       font-weight: bold;
   }
 
-  .dumb{
+  .fontsize15px{
     font-size: 15px; 
     font-family: sans-serif
   }
@@ -452,4 +334,12 @@ h1 {
 
   .background_white{
     background-color:  whitesmoke;
+  }
+
+  .marginbottom{
+      margin-bottom:10px
+  }
+
+  .marginleft10px{
+      margin-left: 10px;
   }
