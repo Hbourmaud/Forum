@@ -35,12 +35,30 @@ func main() {
 	http.HandleFunc("/comment", func(w http.ResponseWriter, r *http.Request) {
 		forum.MoreComment(w, r)
 	})
+	http.HandleFunc("/activity", func(w http.ResponseWriter, r *http.Request) {
+		forum.Activity(w, r)
+	})
+	http.HandleFunc("/remove", func(w http.ResponseWriter, r *http.Request) {
+		forum.RemovePostHandler(w, r)
+	})
+	http.HandleFunc("/removeComm", func(w http.ResponseWriter, r *http.Request) {
+		forum.RemoveCommHandler(w, r)
+	})
+	http.HandleFunc("/edit", func(w http.ResponseWriter, r *http.Request) {
+		forum.EditPostHandler(w, r)
+	})
+	http.HandleFunc("/editComm", func(w http.ResponseWriter, r *http.Request) {
+		forum.EditCommHandler(w, r)
+	})
+	http.HandleFunc("/removePic", func(w http.ResponseWriter, r *http.Request) {
+		forum.RemovePicHandler(w, r)
+	})
 	fs := http.FileServer(http.Dir("static/"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	fs2 := http.FileServer(http.Dir("img/"))
 	http.Handle("/img/", http.StripPrefix("/img/", fs2))
 
-	err := http.ListenAndServe("localhost:8081", nil)
+	err := http.ListenAndServe("localhost:8080", nil)
 
 	if err != nil {
 		fmt.Println(err)

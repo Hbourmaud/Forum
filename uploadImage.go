@@ -16,7 +16,7 @@ func uploadImage(w http.ResponseWriter, r *http.Request) (string, string, string
 	err := r.ParseMultipartForm(Max_upload_size)
 	if err != nil {
 		fmt.Println("0", err)
-		return "tooBig", "", "", ""
+		return "", "", "", "tooBig"
 	}
 
 	file, fileHeader, err := r.FormFile("picture")
@@ -40,7 +40,7 @@ func uploadImage(w http.ResponseWriter, r *http.Request) (string, string, string
 
 	filetype := http.DetectContentType(buffMime)
 	if filetype != "image/jpeg" && filetype != "image/png" && filetype != "image/gif" {
-		return "wrongType", "", "", ""
+		return "", "", "", "wrongType"
 	}
 	_, err = file.Seek(0, io.SeekStart)
 	if err != nil {

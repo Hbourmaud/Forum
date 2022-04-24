@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"type="text/css" href="static/style.css"/>
+    <title>Edit your comment</title>
+</head>
+<body>
+    <div class="header">
+        <h1>Forum</h1>
+    </div>
+    <div class="floatleft">
+        <a class="goback" href="/">  ← go back to the main page </a>
+    </div>
+    <div class="createpost">
+    <p>Edit your comment</p>
+    </div>
+    <form method="post" action="/editComm">
+        <input type="hidden" name="edit_id_comm" value={{.Id_comm}}>
+        <input type="hidden" name="status_edit" value="" >
+        <div class="margin20px">
+            <textarea class="border3px" name="comment" type="text" value="" required="required" rows="10" cols="80">{{.Comment}}</textarea>
+        </div>
+        <input class="submitbutton" type="submit" value="submit" />
+    </form>
+</body>
+</html>

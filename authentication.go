@@ -20,6 +20,13 @@ func AuthenticationHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("static/authentication.html"))
 	switch r.Method {
 	case "GET":
+		ck_uuid_user, err := r.Cookie("uuid_hash")
+		if err != nil {
+			fmt.Println(err)
+		} else if ck_uuid_user.Value != "" {
+			http.Redirect(w, r, "/", http.StatusSeeOther)
+			return
+		}
 
 	case "POST":
 		username := r.FormValue("username")
@@ -70,6 +77,15 @@ func AuthenticationHandler(w http.ResponseWriter, r *http.Request) {
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("static/login.html"))
+
+	ck_uuid_user, err := r.Cookie("uuid_hash")
+	if err != nil {
+		fmt.Println(err)
+	} else if ck_uuid_user.Value != "" {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
 	username := r.FormValue("username")
 	email := r.FormValue("email")
 	passwd := r.FormValue("passwd")

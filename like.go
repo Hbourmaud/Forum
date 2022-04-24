@@ -29,7 +29,9 @@ func LikeHandler(w http.ResponseWriter, r *http.Request) {
 
 		ck_uuid_user, err2 := r.Cookie("uuid_hash")
 		if err2 != nil {
+			http.Redirect(w, r, "/login", http.StatusSeeOther)
 			fmt.Println(err2)
+			return
 		}
 		uuid_user := ck_uuid_user.Value
 		r.ParseForm()

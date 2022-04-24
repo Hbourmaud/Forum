@@ -41,6 +41,11 @@
                     </form>
                 </div>
                 <div>
+                    <form action="/activity" method="GET">
+                        <button class="submitbutton margin" type="submit">Activity</button>
+                    </form>
+                </div>
+                <div>
                     <form action="/" method="POST">
                         <SELECT class="submitbutton" id="category" name="category" size="1">
                             <option value="" disabled selected>Choose a category</option>
@@ -66,9 +71,9 @@
                         <div class="this_is_title marginbottom">
                             by {{ .Id_account}}
                         </div>
-                        <div class="fontsize15px marginleft10px">
+                        <div class="serifless marginleft10px">
                         {{ .Texts}}  
-                    </div> 
+                        </div> 
                         <div class="marginbottom" id="Pic{{.Picture}}" >         
                         <img class="photo marginbottom" src="{{.Picture}}" width="100px">
                         </div>
@@ -85,7 +90,7 @@
                         </div>
                         <form action="/comment" method="POST">
                             <input type="hidden" id="uuid_post" name="uuid_post" value="{{.Id_post}}">
-                            <button class="sub_button" type="submit" value="more_comments">view more comments</button>
+                            <button class="sub_button" type="submit" value="more_comments">view comments section</button>
                         </form>
                     </div>
                     <script>

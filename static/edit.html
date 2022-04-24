@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"type="text/css" href="static/style.css"/>
+    <title>Edit Post</title>
+</head>
+<body>
+<div class="header">
+    <h1>Forum</h1>
+</div>
+<div clas="login">
+    <div class="textalignleft marginbottom">
+        <div class="floatleft">
+            <a class="goback" href="/">  ← go back to the main page </a>
+        </div>
+        <div class="createpost">
+        <p>Edit your post</p>
+        </div>
+    </div>
+    <form id="form" enctype="multipart/form-data" method="post" action="/edit">
+        <div class="marginbottom">
+            <textarea class="border3px" name="title" type="text" value="" required="required" rows="1" cols="50" maxlength="75">{{.Title}}</textarea>
+        </div>
+        <div class="marginbottom">
+            <textarea class="border3px" name="content" type="text" value="" required="required" rows="10" cols="80">{{.Texts}}</textarea>
+        </div>
+        <div id="Pic{{.Picture}}">
+        <img class="photo marginbottom" src="{{.Picture}}" width="100px">
+        <script>
+            var picture = "{{.Picture}}"
+        </script>
+        <button class="submitbutton" onclick=deletePicture()>Remove Picture</button>
+        </div>
+        <SELECT class="thisbutton marginbottom" id="category" name="category" size="1">
+            <option value="" disabled selected>Select a category</option>
+            <OPTION value="politic">politic</OPTION>
+            <OPTION value="sport">sport</OPTION>
+            <OPTION value="entertainment">entertainment</OPTION>
+            <OPTION value="others">others</OPTION>
+        </SELECT>
+        <input type="file" id="actual-btn" name="picture" hidden/>
+        <label class="thisbutton" for="actual-btn">Choose File</label>
+        <span id="file-chosen">No file chosen</span>
+        <input type="hidden" name="post_to_change" value="{{.Id_post}}">
+        <input type="hidden" name="status_edit" value="{{.IsGood}}">
+        <button class="submitbutton" type="submit">Submit Changes</button>
+    </form>
+    <div class="err_mess marginbottom" id="err_sentence">{{.Sentence}}</div>
+</div>
+</body>
+</html>
+<script>
+    document.getElementById('category').value="{{.Category}}";
+    var toDelPic = document.getElementById("Pic");
+        if (toDelPic != null){
+            toDelPic.remove();
+        }
+    function deletePicture(){
+        fetch("/removePic", {
+            method: 'POST',
+            body: JSON.stringify({
+                picture : picture,
+            }),
+        })
+        var toDelPic = document.getElementById("Pic"+picture);
+        if (toDelPic != null){
+            toDelPic.remove();
+        }
+    }
+    const actualBtn = document.getElementById('actual-btn');
+    const fileChosen = document.getElementById('file-chosen');
+    actualBtn.addEventListener('change', function(){
+    fileChosen.textContent = this.files[0].name})
+    if (document.getElementById('err_sentence').childNodes.length === 0){
+        document.getElementById('err_sentence').remove();
+    }
+</script>

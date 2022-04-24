@@ -31,21 +31,21 @@
         <div class="postcomment marginbottom">
             <div>
                 <div class="displayflex">
-                    <div class="category1">{{ .Category}}</div>
+                    <div id="cat{{.Category}}" class="category1">{{ .Category}}</div>
                     <div class="account">{{ .Title}}</div>
                 </div>
             </div>
             <div class="this_is_title">
                by {{ .Id_account}}
             </div>
-            <div class="marginbottom">
+            <div class="marginbottom serifless marginleft10px">
             <p>{{ .Texts}}</p>
             </div>
-            <img class="photo marginbottom" src="{{.Picture}}" width="100px">
+            <img id="Pic{{.Picture}}" class="photo marginbottom" src="{{.Picture}}" width="100px">
         </div>
             <form action="/commentcreation" method="POST">
                 <input type="hidden" id="uuid_post" name="uuid_post" value="{{.Id_post}}">
-                <button class="submitbutton1" type="submit" value="create_comment">create comment</button>
+                <button class="submitbutton" type="submit" value="create_comment">create comment</button>
             </form>
     </div>
 		{{ range .Comments}}
@@ -66,3 +66,17 @@
 		{{ end }}
 </body>
 </html>
+<script>
+    var toDelPic = document.getElementById("Pic");
+    var toDelCat = document.getElementById("cat");
+    var toDel = document.getElementById("no");
+    if (toDel != null){
+        toDel.remove();
+    }
+    if (toDelPic != null){
+        toDelPic.remove();
+    }
+    if (toDelCat != null){
+        toDelCat.remove();
+    }
+</script>

@@ -102,14 +102,18 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {
 	case "POST":
-		user_uuid, err := r.Cookie("uuid_hash")
-		if err != nil {
-			http.Redirect(w, r, "/login", http.StatusSeeOther)
-			fmt.Println(err)
-			return
-		}
-		uuid_user := user_uuid.Value
 		category := r.FormValue("category")
+		user_uuid, err := r.Cookie("uuid_hash")
+		uuid_user := ""
+		if err != nil {
+			if category == "" {
+				http.Redirect(w, r, "/login", http.StatusSeeOther)
+				return
+			}
+			fmt.Println(err)
+		} else {
+			uuid_user = user_uuid.Value
+		}
 		created_posted := r.FormValue("created_posts")
 		liked_posts := r.FormValue("liked_posts")
 		DataTab = filters(category, uuid_user, created_posted, liked_posts)

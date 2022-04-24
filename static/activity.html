@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"type="text/css" href="static/style.css"/>
+    <title>My Activity</title>
+</head>
+<body class="background_white">
+	<div class="header">
+        <h1>Forum</h1>
+    </div>
+	<div>
+        <a class="goback marginbottom" href="/">  ← go back to the main page </a>
+    </div>
+    <div>
+        <a class="goback" href="#post_created">Post Created</a>
+        <a class="goback" href="#post_liked">Post Liked</a>
+        <a class="goback" href="#post_disliked">Post Disliked</a>
+        <a class="goback" href="#post_commented">Post Commented</a>
+    </div>
+    <div>
+        <h2 id="post_created" class="sous_titre"> <u>Post Created</u></h2>
+        {{range .DataTabCreate}}
+        <div class="this_posts">
+            <div class="displayflex">
+                <div id="cat{{.Category}}" class="category1">{{ .Category}}</div>
+                <div class="account">{{ .Title}}</div>
+            </div>
+			<div class="this_is_title">
+				by {{ .Id_account}}
+			 </div>
+			 <div class="serifless marginleft10px marginbottom">
+				<p>{{ .Texts}}</p>
+			</div>
+            <div class="marginbottom" id="Pic{{.Picture}}" >         
+                <img class="photo marginbottom" src="{{.Picture}}" width="100px">
+            </div>
+            👍 {{ .Like}} |
+            👎 {{ .Dislike}}
+            
+            <div class="displayflex margin20px">
+            <button class="submitbutton" id="{{.Id_post}}" onclick="Remove(this.id)">Remove</button>
+            <form action="/edit" method="POST">
+                <input type="hidden" value="toEdit" name="status_edit">
+                <button class="submitbutton" name="edit_id_post" type="submit" value="{{.Id_post}}">Edit</button>
+            </form>
+            <form action="/comment" method="POST">
+                <input type="hidden" id="uuid_post" name="uuid_post" value="{{.Id_post}}">
+                <button class="submitbutton" type="submit" value="more_comments">view comments section</button>
+            </form>
+        </div>
+        </div>
+        <script>
+            var toDelPic = document.getElementById("Pic");
+            var toDelCat = document.getElementById("cat");
+            var toDel = document.getElementById("no");
+            if (toDel != null){
+                toDel.remove();
+            }
+            if (toDelPic != null){
+                toDelPic.remove();
+            }
+            if (toDelCat != null){
+                toDelCat.remove();
+            }
+        </script>
+        {{ end }}
+    </div>
+    
+    <div>
+        <h2 id="post_liked" class="sous_titre"> <u>Post Liked</u></h2>
+        {{range .DataTabPostLike}}
+        <div class="this_posts"> 
+            <div class="displayflex">
+                <div id="cat{{.Category}}" class="category1">{{ .Category}}</div> 
+                <div class="account">{{ .Title}}</div>
+            </div>
+			<div class="this_is_title">
+				by {{ .Id_account}}
+			 </div>
+			 <div class="serifless marginleft10px marginbottom">
+				<p>{{ .Texts}}</p>
+			</div>
+            <div class="marginbottom" id="Pic{{.Picture}}" >         
+                <img class="photo marginbottom" src="{{.Picture}}" width="100px">
+            </div>
+            👍 {{ .Like}} |
+            👎 {{ .Dislike}}
+            
+            <div class="displayflex margin20px">
+            <form action="/comment" method="POST">
+                <input type="hidden" id="uuid_post" name="uuid_post" value="{{.Id_post}}">
+                <button class="submitbutton" type="submit" value="more_comments">view comments section</button>
+            </form>
+            </div>
+        </div>
+        <script>
+            var toDelPic = document.getElementById("Pic");
+            var toDelCat = document.getElementById("cat");
+            var toDel = document.getElementById("no");
+            if (toDel != null){
+                toDel.remove();
+            }
+            if (toDelPic != null){
+                toDelPic.remove();
+            }
+            if (toDelCat != null){
+                toDelCat.remove();
+            }
+        </script>
+        {{ end }}
+    </div>
+    
+    <div>
+        <h2 id="post_disliked" class="sous_titre"> <u>Post Disliked</u></h2>
+        {{range .DataTabPostDislike}}
+        <div class="this_posts">
+            <div class="displayflex">
+                <div id="cat{{.Category}}" class="category1">{{ .Category}}</div>
+                <div class="account">{{ .Title}}</div>
+            </div>
+			<div class="this_is_title">
+				by {{ .Id_account}}
+			 </div>
+			 <div class="serifless marginleft10px marginbottom">
+				<p>{{ .Texts}}</p>
+			</div>
+            <div class="marginbottom" id="Pic{{.Picture}}" >         
+                <img class="photo marginbottom" src="{{.Picture}}" width="100px">
+            </div>
+            👍 {{ .Like}} |
+            👎 {{ .Dislike}}
+            
+            <div class="displayflex margin20px">
+            <form action="/comment" method="POST">
+                <input type="hidden" id="uuid_post" name="uuid_post" value="{{.Id_post}}">
+                <button class="submitbutton" type="submit" value="more_comments">view comments section</button>
+            </form>
+            </div>
+        </div>
+        <script>
+            var toDelPic = document.getElementById("Pic");
+            var toDelCat = document.getElementById("cat");
+            var toDel = document.getElementById("no");
+            if (toDel != null){
+                toDel.remove();
+            }
+            if (toDelPic != null){
+                toDelPic.remove();
+            }
+            if (toDelCat != null){
+                toDelCat.remove();
+            }
+        </script>
+        {{ end }}
+    </div>
+    
+    <div>
+        <h2 id="post_commented" class="sous_titre"> <u>Post Commented</u></h2>
+        {{range .DataTabComment}}
+        <div class="this_posts">
+            <div class="displayflex">
+                <div id="cat{{.Category}}" class="category1">{{ .Category}}</div>
+                <div class="account">{{ .Title}}</div>
+            </div>
+			<div class="this_is_title">
+				by {{ .Id_account}}
+			 </div>
+			 <div class="serifless marginleft10px marginbottom">
+				<p>{{ .Texts}}</p>
+			</div>
+            <div class="marginbottom" id="Pic{{.Picture}}" >         
+                <img class="photo marginbottom" src="{{.Picture}}" width="100px">
+            </div>
+            👍 : {{ .Like}} |
+            👎 : {{ .Dislike}}
+            
+            <div class="fontsize20px">
+            Comment left:
+            {{.One_comment}}
+        </div>
+            <div class="displayflex margin20px">
+            <button class="submitbutton" id="{{.One_comment_id}}" onclick="RemoveComm(this.id)">Remove</button>
+            <form action="/editComm" method="POST">
+                <input type="hidden" value="toEdit" name="status_edit">
+                <button class="submitbutton" name="edit_id_comm" type="submit" value="{{.One_comment_id}}">Edit</button>
+            </form>
+            <form action="/comment" method="POST">
+                <input type="hidden" id="uuid_post" name="uuid_post" value="{{.Id_post}}">
+                <button class="submitbutton" type="submit" value="more_comments">view comments section</button>
+            </form>
+            </div>
+        </div>
+        <script>
+            var toDelPic = document.getElementById("Pic");
+            var toDelCat = document.getElementById("cat");
+            var toDel = document.getElementById("no");
+            if (toDel != null){
+                toDel.remove();
+            }
+            if (toDelPic != null){
+                toDelPic.remove();
+            }
+            if (toDelCat != null){
+                toDelCat.remove();
+            }
+        </script>
+        {{ end }}
+    </div>
+</body>
+</html>
+<script>
+    function Remove(id_post_req){
+        fetch("/remove", {
+            method: 'POST',
+            body: JSON.stringify({
+                id_post: id_post_req,
+            }),
+        })
+		window.location.reload();
+    }
+    function RemoveComm(id_comm_req){
+        console.log("sapasse",id_comm_req)
+        fetch("/removeComm", {
+            method: 'POST',
+            body: JSON.stringify({
+                id_comm: id_comm_req,
+            }),
+        })
+		window.location.reload();
+    }
+</script>

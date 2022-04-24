@@ -18,7 +18,12 @@ func CreationPost(w http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {
 	case "GET":
-
+		_, err := r.Cookie("uuid_hash")
+		if err != nil {
+			http.Redirect(w, r, "/login", http.StatusSeeOther)
+			fmt.Println(err)
+			return
+		}
 	case "POST":
 		ck_uuid_user, err := r.Cookie("uuid_hash")
 		if err != nil {
@@ -31,11 +36,11 @@ func CreationPost(w http.ResponseWriter, r *http.Request) {
 
 		title, content, category, picture := uploadImage(w, r)
 
-		if title == "" {
+		if picture == "" && title == "" {
 
-		} else if title == "tooBig" && content == "" {
+		} else if picture == "tooBig" {
 			data = " File is too big, Maximum 20mb file accepted"
-		} else if title == "wrongType" && content == "" {
+		} else if picture == "wrongType" {
 			data = " Wrong type file, please upload JPG, PNG or GIF"
 		} else {
 			// Cela permet d'ouvrir et fermer la database
@@ -44,22 +49,6 @@ func CreationPost(w http.ResponseWriter, r *http.Request) {
 				fmt.Println(err)
 			}
 			defer db.Close()
-
-			// Je récupère l'UUID de la personne pour prouver que ce poste est bien à lui
-			rows, err := db.Query("SELECT UUID FROM authentication WHERE UUID=(?);", uuid_user)
-			if err != nil {
-				fmt.Println("erroruuid", err)
-			}
-
-			for rows.Next() {
-				var id_account int
-
-				err = rows.Scan(&id_account)
-
-				if err != nil {
-					fmt.Println(err)
-				}
-			}
 			var id sql.NullInt64
 			// J'envoie les informations dans la base de donnée
 			_, err = db.Exec("INSERT INTO posts(id, id_account, title, texts, category, picture) VALUES(?,?,?,?,?,?)", id, uuid_user, title, content, category, picture)
